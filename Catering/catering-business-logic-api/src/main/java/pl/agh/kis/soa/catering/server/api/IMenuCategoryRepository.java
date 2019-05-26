@@ -7,7 +7,7 @@ import java.util.List;
 public interface IMenuCategoryRepository {
     MenuCategory getMenuCategoryById(Long id);
     List<MenuCategory> getAllMenuCategories();
-    boolean addMenuCategory(String name);
-    boolean updateMenuCategory(Long id, String name);
+    void addMenuCategory(String name);
+    void updateMenuCategory(Long id, String name);
     void deleteMenuCategory(Long id);
 }

@@ -8,7 +8,8 @@ import java.util.List;
 public interface IMenuItemRepository {
     MenuItem getMenuItemById(Long id);
     List<MenuItem> getAllMenuItems();
-    boolean addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId);
-    boolean updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId);
+    List<MenuItem> getAllMenuCategoryItems(Long menuCategoryId);
+    void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId);
+    void updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId);
     void deleteMenuItem(Long id);
 }

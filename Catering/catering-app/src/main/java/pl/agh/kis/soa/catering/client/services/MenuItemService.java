@@ -4,7 +4,7 @@ import pl.agh.kis.soa.catering.server.api.IMenuItemRepository;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,12 +23,14 @@ public class MenuItemService {
         return menuItemRepository.getAllMenuItems();
     }
 
-    public boolean addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId) {
-        return menuItemRepository.addMenuItem(name, servingSize, price, menuCategoryId);
+    public List<MenuItem> getAllMenuCategoryItems(Long menuCategoryId) { return menuItemRepository.getAllMenuCategoryItems(menuCategoryId); }
+
+    public void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId) {
+        menuItemRepository.addMenuItem(name, servingSize, price, menuCategoryId);
     }
 
-    public boolean updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId) {
-        return menuItemRepository.updateMenuItem(id, name, servingSize, price, menuCategoryId);
+    public void updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId) {
+        menuItemRepository.updateMenuItem(id, name, servingSize, price, menuCategoryId);
     }
 
     public void deleteMenuItem(Long id) {

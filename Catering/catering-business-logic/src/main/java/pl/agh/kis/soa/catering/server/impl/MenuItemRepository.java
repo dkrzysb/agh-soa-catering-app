@@ -31,7 +31,15 @@ public class MenuItemRepository implements IMenuItemRepository {
         return query.getResultList();
     }
 
-    public boolean addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId) {
+    public List<MenuItem> getAllMenuCategoryItems(Long menuCategoryId) {
+        EntityManager em = factory.createEntityManager();
+        Query query = em.createQuery("select menuItem from MenuItem menuItem where menuItem.menuCategory.id = :menuCategoryId")
+                .setParameter("menuCategoryId", menuCategoryId);
+
+        return query.getResultList();
+    }
+
+    public void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId) {
         EntityManager em = factory.createEntityManager();
 
         if(!sameMenuItemExistsInMenuCategory(em, name, servingSize, menuCategoryId)) {
@@ -44,45 +52,32 @@ public class MenuItemRepository implements IMenuItemRepository {
 
             em.getTransaction().begin();
             em.persist(menuItem);
-            menuCategory.getItems().add(menuItem);
             em.getTransaction().commit();
-
-            return true;
         }
-        return false;
     }
 
-    public boolean updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId) {
+    public void updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId) {
         EntityManager em = factory.createEntityManager();
 
-        if(!sameMenuItemExistsInMenuCategory(em, name, servingSize, menuCategoryId)) {
-            MenuCategory newMenuCategory = em.find(MenuCategory.class, menuCategoryId);
-            MenuItem menuItem = em.find(MenuItem.class, id);
-            MenuCategory currentMenuItemCategory = menuItem.getMenuCategory();
+        MenuCategory newMenuCategory = em.find(MenuCategory.class, menuCategoryId);
+        MenuItem menuItem = em.find(MenuItem.class, id);
 
-            em.getTransaction().begin();
-            currentMenuItemCategory.getItems().remove(menuItem);
-            menuItem.setName(name);
-            menuItem.setServingSize(servingSize);
-            menuItem.setPrice(price);
-            newMenuCategory.getItems().add(menuItem);
-            em.getTransaction().commit();
-
-            return true;
-        }
-
-        return false;
+        em.getTransaction().begin();
+        menuItem.setName(name);
+        menuItem.setServingSize(servingSize);
+        menuItem.setPrice(price);
+        menuItem.setMenuCategory(newMenuCategory);
+        em.getTransaction().commit();
     }
 
     public void deleteMenuItem(Long id) {
         EntityManager em = factory.createEntityManager();
         MenuItem menuItem = em.find(MenuItem.class, id);
+        MenuCategory menuCategory = em.find(MenuCategory.class, menuItem.getMenuCategory().getId());
 
-        if(menuItem != null) {
-            em.getTransaction().begin();
-            em.remove(menuItem);
-            em.getTransaction().commit();
-        }
+        em.getTransaction().begin();
+        em.remove(menuItem);
+        em.getTransaction().commit();
     }
 
     private boolean sameMenuItemExistsInMenuCategory(EntityManager em, String name, int servingSize, Long menuCategoryId) {
@@ -90,8 +85,6 @@ public class MenuItemRepository implements IMenuItemRepository {
                 .setParameter("name", name)
                 .setParameter("servingSize", servingSize)
                 .setParameter("menuCategoryId", menuCategoryId);
-        if(query.getSingleResult() != null)
-            return true;
-        return false;
+        return query.getResultList().size() != 0;
     }
 }

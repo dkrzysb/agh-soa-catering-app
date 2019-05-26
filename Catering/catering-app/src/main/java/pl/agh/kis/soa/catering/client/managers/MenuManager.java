@@ -2,20 +2,19 @@ package pl.agh.kis.soa.catering.client.managers;
 
 import pl.agh.kis.soa.catering.client.services.MenuCategoryService;
 import pl.agh.kis.soa.catering.client.services.MenuItemService;
-import pl.agh.kis.soa.catering.server.api.IMenuCategoryRepository;
-import pl.agh.kis.soa.catering.server.api.IMenuItemRepository;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
+import pl.agh.kis.soa.catering.server.model.MenuItem;
 
-import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.*;
 import java.util.List;
 
 @ManagedBean(name = "MenuManager")
-@ApplicationScoped
+@SessionScoped
 public class MenuManager {
-    private Long menuCategoryId;
+    private Long menuCategoryId = 1L;
+    private MenuCategory menuCategory;
+    private MenuItem menuItem;
+    private OperationType operationType;
 
     @ManagedProperty(value="#{menuItemService}")
     private MenuItemService menuItemService;
@@ -25,10 +24,88 @@ public class MenuManager {
     public Long getMenuCategoryId() { return menuCategoryId; }
     public void setMenuCategoryId(Long menuCategoryId) { this.menuCategoryId = menuCategoryId; }
 
+    public MenuCategory getMenuCategory() { return menuCategory; }
+
+    public MenuItem getMenuItem() { return menuItem; }
+
     public void setMenuItemService(MenuItemService menuItemService) { this.menuItemService = menuItemService; }
+
     public void setMenuCategoryService(MenuCategoryService menuCategoryService) { this.menuCategoryService = menuCategoryService; }
 
     public List<MenuCategory> getAllMenuCategories() {
         return menuCategoryService.getAllMenuCategories();
     }
+
+    public List<MenuItem> getAllMenuCategoryItems() { return menuItemService.getAllMenuCategoryItems(menuCategoryId); }
+
+    public String addMenuCategory() {
+        this.menuCategory = new MenuCategory();
+        operationType = OperationType.Add;
+
+        return "add-update-menu-category";
+    }
+
+    public String updateMenuCategory() {
+        this.menuCategory = menuCategoryService.getMenuCategoryById(menuCategoryId);
+        operationType = OperationType.Update;
+
+        return "add-update-menu-category";
+    }
+
+    public String deleteMenuCategory() {
+        menuCategoryService.deleteMenuCategory(menuCategoryId);
+
+        return "index";
+    }
+
+    public String addMenuItem() {
+        this.menuItem = new MenuItem();
+        operationType = OperationType.Add;
+
+        return "add-update-menu-item";
+    }
+
+    public String updateMenuItem(MenuItem menuItem) {
+        this.menuItem = menuItem;
+        operationType = OperationType.Update;
+
+        return "add-update-menu-item";
+    }
+
+    public String deleteMenuItem(MenuItem menuItem) {
+        menuItemService.deleteMenuItem(menuItem.getId());
+
+        return "index";
+    }
+
+    public String addOrUpdateMenuCategory() {
+        switch(operationType) {
+            case Add:
+                menuCategoryService.addMenuCategory(menuCategory.getName());
+                break;
+            case Update:
+                menuCategoryService.updateMenuCategory(menuCategory.getId(), menuCategory.getName());
+                break;
+        }
+
+        return "index";
+    }
+
+    public String addOrUpdateMenuItem() {
+        switch(operationType) {
+            case Add:
+                menuItemService.addMenuItem(menuItem.getName(), menuItem.getServingSize(), menuItem.getPrice(), menuCategoryId);
+                break;
+            case Update:
+                menuItemService.updateMenuItem(menuItem.getId(), menuItem.getName(), menuItem.getServingSize(), menuItem.getPrice(), menuCategoryId);
+                break;
+        }
+
+        return "index";
+    }
+}
+
+enum OperationType {
+    Add,
+    Update
 }

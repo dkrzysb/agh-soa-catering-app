@@ -24,12 +24,12 @@ public class MenuCategoryRepository implements IMenuCategoryRepository {
 
     public List<MenuCategory> getAllMenuCategories() {
         EntityManager em = factory.createEntityManager();
-        Query query = em.createQuery("select menuCategory from MenuCategory menuCategory");
+        Query query = em.createQuery("select menuCategory from MenuCategory menuCategory", MenuCategory.class);
 
         return query.getResultList();
     }
 
-    public boolean addMenuCategory(String name) {
+    public void addMenuCategory(String name) {
         EntityManager em = factory.createEntityManager();
 
         if(!sameMenuCategoryExists(em, name)) {
@@ -39,24 +39,16 @@ public class MenuCategoryRepository implements IMenuCategoryRepository {
             em.getTransaction().begin();
             em.persist(menuCategory);
             em.getTransaction().commit();
-            return true;
         }
-        return false;
     }
 
-    public boolean updateMenuCategory(Long id, String name) {
+    public void updateMenuCategory(Long id, String name) {
         EntityManager em = factory.createEntityManager();
         MenuCategory menuCategory = em.find(MenuCategory.class, id);
 
-        if(!sameMenuCategoryExists(em, name)) {
-            em.getTransaction().begin();
-            menuCategory.setName(name);
-            em.getTransaction().commit();
-
-            return true;
-        }
-
-        return false;
+        em.getTransaction().begin();
+        menuCategory.setName(name);
+        em.getTransaction().commit();
     }
 
     public void deleteMenuCategory(Long id) {
@@ -73,8 +65,7 @@ public class MenuCategoryRepository implements IMenuCategoryRepository {
     private boolean sameMenuCategoryExists(EntityManager em, String name) {
         Query query = em.createQuery("select menuCategory from MenuCategory menuCategory where menuCategory.name = :name")
                 .setParameter("name", name);
-        if(query.getSingleResult() != null)
-            return true;
-        return false;
+
+        return query.getResultList().size() != 0;
     }
 }

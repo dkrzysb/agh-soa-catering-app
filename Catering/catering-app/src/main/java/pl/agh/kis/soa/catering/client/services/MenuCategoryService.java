@@ -4,7 +4,7 @@ import pl.agh.kis.soa.catering.server.api.IMenuCategoryRepository;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.util.List;
 
@@ -22,12 +22,12 @@ public class MenuCategoryService {
         return menuCategoryRepository.getAllMenuCategories();
     }
 
-    public boolean addMenuCategory(String name) {
-        return menuCategoryRepository.addMenuCategory(name);
+    public void addMenuCategory(String name) {
+        menuCategoryRepository.addMenuCategory(name);
     }
 
-    public boolean updateMenuCategory(Long id, String name) {
-        return menuCategoryRepository.updateMenuCategory(id, name);
+    public void updateMenuCategory(Long id, String name) {
+        menuCategoryRepository.updateMenuCategory(id, name);
     }
 
     public void deleteMenuCategory(Long id) {

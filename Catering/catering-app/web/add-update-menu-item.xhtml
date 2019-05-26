@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head><title>MenuItem administration</title></h:head>
+    <h:body>
+        <h:form>
+            Name:<br />
+            <h:inputText value="#{MenuManager.menuItem.name}" required="true" label="Name" /><br />
+            Serving size:<br/>
+            <h:inputText value="#{MenuManager.menuItem.servingSize}" required="true" label="Serving size" /><br />
+            Price:<br />
+            <h:inputText value="#{MenuManager.menuItem.price}" required="true" label="Price" /><br />
+            Menu category:<br />
+            <h:selectOneMenu value="#{MenuManager.menuCategoryId}">
+                <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemLabel="#{menuCategory.name}" itemValue="#{menuCategory.id}" />
+            </h:selectOneMenu><br />
+            <h:commandButton value="Submit" action="#{MenuManager.addOrUpdateMenuItem}" />
+            <h:messages style = "color:red;margin:8px;" />
+        </h:form>
+    </h:body>
+</html>

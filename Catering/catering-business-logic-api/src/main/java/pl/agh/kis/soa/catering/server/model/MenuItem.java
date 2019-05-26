@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Setter
 public class MenuItem implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private int servingSize;
