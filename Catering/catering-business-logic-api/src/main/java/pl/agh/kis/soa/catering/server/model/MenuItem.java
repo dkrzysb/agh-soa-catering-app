@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "MenuItem")
 @Getter
 @Setter
+@XmlRootElement
 public class MenuItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +22,6 @@ public class MenuItem implements Serializable {
     private BigDecimal price;
     @ManyToOne
     private MenuCategory menuCategory;
+
+    public MenuItem() {}
 }

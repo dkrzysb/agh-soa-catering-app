@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,11 +12,14 @@ import java.util.List;
 @Table(name = "MenuCategory")
 @Getter
 @Setter
+@XmlRootElement
 public class MenuCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "menuCategory", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "menuCategory", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MenuItem> items;
+
+    public MenuCategory() {}
 }

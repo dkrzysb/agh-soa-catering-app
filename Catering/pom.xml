@@ -12,6 +12,8 @@
         <module>catering-app</module>
         <module>catering-business-logic-api</module>
         <module>catering-business-logic</module>
+        <module>catering-business-logic-rest</module>
+        <module>catering-rest-client</module>
     </modules>
 
     <dependencies>
