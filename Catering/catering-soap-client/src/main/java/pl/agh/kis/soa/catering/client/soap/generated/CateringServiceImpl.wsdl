@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://implementations.soap.server.soa.kis.agh.pl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://interfaces.soap.server.soa.kis.agh.pl/" name="CateringServiceImplService" targetNamespace="http://implementations.soap.server.soa.kis.agh.pl/">
+  <wsdl:import location="http://localhost:8080/catering-business-logic-soap/CateringServiceImpl?wsdl=CateringService.wsdl" namespace="http://interfaces.soap.server.soa.kis.agh.pl/">
+    </wsdl:import>
+  <wsdl:binding name="CateringServiceImplServiceSoapBinding" type="ns1:CateringService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addMenuItemToCategory">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addMenuItemToCategory">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addMenuItemToCategoryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CateringServiceImplService">
+    <wsdl:port binding="tns:CateringServiceImplServiceSoapBinding" name="CateringServiceImplPort">
+      <soap:address location="http://localhost:8080/catering-business-logic-soap/CateringServiceImpl"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
