@@ -25,12 +25,6 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0.1-b5</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
             <version>3.6.3.Final</version>
@@ -41,15 +35,21 @@
             <version>3.6.3.Final</version>
         </dependency>
         <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+            <version>1.5.22</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0.1-b5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>pl.agh.kis.soa.catering.server.api</groupId>
             <artifactId>catering-business-logic-api</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-jaxrs</artifactId>
-            <version>1.5.22</version>
         </dependency>
     </dependencies>
 
