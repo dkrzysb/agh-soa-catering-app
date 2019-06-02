@@ -77,6 +77,7 @@ public class MenuItemRepository implements IMenuItemRepository {
 
         em.getTransaction().begin();
         em.remove(menuItem);
+        menuCategory.getItems().remove(menuItem);
         em.getTransaction().commit();
     }
 
