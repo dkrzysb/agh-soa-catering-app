@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
-    <endpoint name="HolidaysServiceImp" implementation="pl.agh.kis.soa.server.soap.implementations.CateringServiceImpl"
+    <endpoint name="CateringServiceImpl" implementation="pl.agh.kis.soa.server.soap.implementations.CateringServiceImpl"
               url-pattern="/services/" />
 </endpoints>

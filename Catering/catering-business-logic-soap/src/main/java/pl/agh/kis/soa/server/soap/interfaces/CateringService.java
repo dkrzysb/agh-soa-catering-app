@@ -10,4 +10,3 @@ public interface CateringService {
     @WebMethod
     void addMenuItemToCategory(@WebParam(name = "menuItemName")String name, @WebParam(name = "menuItemServingSize")int servingSize, @WebParam(name = "menuItemPrice") BigDecimal price, @WebParam(name = "menuItemCategoryId")Long menuCategoryId);
 }
-

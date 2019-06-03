@@ -1,5 +1,6 @@
 package pl.agh.kis.soa.server.soap.implementations;
 
+
 import pl.agh.kis.soa.catering.server.api.IMenuItemRepository;
 import pl.agh.kis.soa.server.soap.interfaces.CateringService;
 
