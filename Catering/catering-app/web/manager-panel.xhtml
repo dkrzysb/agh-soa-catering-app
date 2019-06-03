@@ -6,15 +6,15 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>CateringApp</title>
+        <title>Manager panel</title>
         <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
     </h:head>
     <h:body>
-        <h3>Navigation</h3>
-            <h:form>
-                <h:commandButton value="Go to manager panel" action="manager-panel" />
-                <h:commandButton value="Go to client panel" action="client-panel" />
-            </h:form>
+    <h3>Navigation</h3>
+        <h:form>
+            <h:commandButton value="Add new menu category" action="#{MenuManager.addMenuCategory}" /><br />
+            <h:commandButton value="Add new menu item" action="#{MenuManager.addMenuItem}" /><br />
+        </h:form>
         <hr />
 
         <h3>Menu</h3>
@@ -23,6 +23,8 @@
                 <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
                 <f:ajax render="menuItemsDT" />
             </h:selectOneMenu><br />
+            <h:commandButton value="Update category" action="#{MenuManager.updateMenuCategory}" /><br />
+            <h:commandButton value="Delete category" action="#{MenuManager.deleteMenuCategory}" />
             <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
                          styleClass="order-table"
                          headerClass="order-table-header"
@@ -42,6 +44,12 @@
                 <h:column>
                     <f:facet name="header">Price</f:facet>
                     #{menuItem.price}
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Update" action="#{MenuManager.updateMenuItem(menuItem)}" />
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Delete" action="#{MenuManager.deleteMenuItem(menuItem)}" />
                 </h:column>
             </h:dataTable>
         </h:form>

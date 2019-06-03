@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head><title>Order summary</title></h:head>
+    <h:body>
+        <h3>Order summary</h3>
+        <h:dataTable value="#{OrdersManager.orderedMenuItems}" var="menuItem"
+                     styleClass="book-table"
+                     headerClass="book-table-header"
+                     rowClasses="book-table-even-row, book-table-odd-row">
+            <h:column>
+                <f:facet name="header">Position number</f:facet>
+                #{menuItem.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                #{menuItem.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Serving size</f:facet>
+                #{menuItem.servingSize}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Price</f:facet>
+                #{menuItem.price}
+            </h:column>
+        </h:dataTable><br />
+        Amount to pay: <h:outputText value="#{OrdersManager.orderPrice}" /> zł
+    </h:body>
+</html>

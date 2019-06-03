@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Offer of the day</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            Menu items: <br />
+            <h:selectManyCheckbox value="#{OfferOfTheDayManager.selectedOffersOfTheDay}">
+                <f:selectItems value="#{OfferOfTheDayManager.allMenuItems}" var="menuItem" itemValue="#{menuItem.id}" itemLabel="#{menuItem.name}" />
+            </h:selectManyCheckbox>
+            Discount: <br />
+            <h:selectOneMenu value="#{OfferOfTheDayManager.discount}">
+                <f:selectItem itemValue="10" itemLabel="10%" />
+                <f:selectItem itemValue="20" itemLabel="20%" />
+                <f:selectItem itemValue="30" itemLabel="30%" />
+                <f:selectItem itemValue="40" itemLabel="40%" />
+                <f:selectItem itemValue="50" itemLabel="50%" />
+            </h:selectOneMenu>
+            <h:commandButton value="Set discount" action="#{OfferOfTheDayManager.setDiscount}" /><br />
+            <h:commandButton value="Go to administration panel" action="index" />
+        </h:form>
+    </h:body>
+</html>

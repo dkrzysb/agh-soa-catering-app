@@ -6,23 +6,19 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>CateringApp</title>
+        <title>Client panel</title>
         <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
     </h:head>
     <h:body>
         <h3>Navigation</h3>
-            <h:form>
-                <h:commandButton value="Go to manager panel" action="manager-panel" />
-                <h:commandButton value="Go to client panel" action="client-panel" />
-            </h:form>
+        <h:form>
+            <h:commandButton value="Change order" /><br />
+            <h:commandButton value="Cancel order" /><br />
+            <h:commandButton value="Manage subscriptions" /><br />
+        </h:form>
         <hr />
 
-        <h3>Menu</h3>
         <h:form>
-            <h:selectOneMenu id="menuCategories" value="#{MenuManager.menuCategoryId}">
-                <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
-                <f:ajax render="menuItemsDT" />
-            </h:selectOneMenu><br />
             <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
                          styleClass="order-table"
                          headerClass="order-table-header"
@@ -43,7 +39,13 @@
                     <f:facet name="header">Price</f:facet>
                     #{menuItem.price}
                 </h:column>
+                <h:column>
+                    <f:facet name="header">Order</f:facet>
+                    <h:selectBooleanCheckbox value="#{OrdersManager.menuItemsToOrder[menuItem.id]}" />
+                </h:column>
             </h:dataTable>
+            <h:commandButton value="Order" action="#{OrdersManager.order}" /><br />
+            <h:commandButton value="Subscribe" action="#{OrdersManager.subscribe}" /><br />
         </h:form>
     </h:body>
 </html>

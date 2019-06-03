@@ -35,7 +35,9 @@ public class DbInitializer {
         MenuCategory menuCategory3 = new MenuCategory();
         menuCategory3.setName("dania jarskie");
         MenuCategory menuCategory4 = new MenuCategory();
-        menuCategory4.setName("dania dnia");
+        menuCategory4.setName("desery");
+        MenuCategory menuCategory5 = new MenuCategory();
+        menuCategory5.setName("dania dnia");
 
         em.getTransaction().begin();
         em.persist(menuCategory1);

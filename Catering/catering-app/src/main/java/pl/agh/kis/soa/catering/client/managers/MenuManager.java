@@ -5,7 +5,9 @@ import pl.agh.kis.soa.catering.client.services.MenuItemService;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
 
-import javax.faces.bean.*;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import java.util.List;
 
 @ManagedBean(name = "MenuManager")
@@ -55,7 +57,7 @@ public class MenuManager {
     public String deleteMenuCategory() {
         menuCategoryService.deleteMenuCategory(menuCategoryId);
 
-        return "index";
+        return "manager-panel";
     }
 
     public String addMenuItem() {
@@ -75,7 +77,7 @@ public class MenuManager {
     public String deleteMenuItem(MenuItem menuItem) {
         menuItemService.deleteMenuItem(menuItem.getId());
 
-        return "index";
+        return "manager-panel";
     }
 
     public String addOrUpdateMenuCategory() {
@@ -88,7 +90,7 @@ public class MenuManager {
                 break;
         }
 
-        return "index";
+        return "manager-panel";
     }
 
     public String addOrUpdateMenuItem() {
@@ -101,7 +103,7 @@ public class MenuManager {
                 break;
         }
 
-        return "index";
+        return "manager-panel";
     }
 }
 
