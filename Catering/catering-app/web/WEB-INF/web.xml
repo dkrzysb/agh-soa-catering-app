@@ -18,6 +18,15 @@
 
     <security-constraint>
         <web-resource-collection>
+            <web-resource-name>Registration Form</web-resource-name>
+            <description>application security constraints</description>
+            <url-pattern>/register.xhtml</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+
+
+    <security-constraint>
+        <web-resource-collection>
             <web-resource-name>HtmlAuth</web-resource-name>
             <description>application security constraints</description>
             <url-pattern>/*</url-pattern>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Admin panel</title>
+    <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
+</h:head>
+<h:body>
+    <h3>Navigation</h3>
+    <h:form>
+        <h:commandButton value="Add new menu category" action="#{MenuManager.addMenuCategory}" /><br />
+        <h:commandButton value="Add new menu item" action="#{MenuManager.addMenuItem}" /><br />
+    </h:form>
+    <hr />
+
+    <h3>Menu</h3>
+    <h:form>
+        <h:dataTable id="usersDT" value="#{UsersManager.allUsers}" var="user"
+                     styleClass="order-table"
+                     headerClass="order-table-header"
+                     rowClasses="order-table-odd-row, order-table-even-row">
+            <h:column>
+                <f:facet name="header">Position number</f:facet>
+                #{user.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Login</f:facet>
+                #{user.login}
+            </h:column>
+            <h:column>
+                <h:commandButton value="Update" action="#{MenuManager.updateMenuItem(menuItem)}" />
+            </h:column>
+            <h:column>
+                <h:commandButton value="Delete" action="#{MenuManager.deleteMenuItem(menuItem)}" />
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>
