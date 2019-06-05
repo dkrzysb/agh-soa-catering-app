@@ -1,0 +1,41 @@
+DODAWANIE BAZY: https://javaee.ch/use-postgresql-with-wildfly?fbclid=IwAR1LDIXXR2_8AZkmvIeQZvYNU8NpD_bj1eRGr97tsMlxy56FXgLYMGJfbVg
+
+DEPLOY: 
+Deployujemy dwie paczki:
+1. catering-business-logic
+JAR
+w Project Settings| Artifacts dodajemy:
+paczki z Mavena
+catering-business-logic compile output
+catering-business-logic-api compile output
+catering-business-logic-api JPA descriptors
+
+2. catering-app
+całą paczkę catering-app 
++(bardzo ważne) catering-business-logic-api JPA descriptors
+
+AUTHENTIFICATION
+W standalone.xml w sekcji <security-domains> dokleić:
+
+<security-domain name="postgresqldomain" cache-type="default">
+    <authentication>
+        <login-module code="Database" flag="required">
+            <module-option name="dsJndiName" value="java:/PostgresDS"/>
+            <module-option name="principalsQuery" value="select passwd from USERS where login=?"/>
+            <module-option name="rolesQuery" value="select role, 'Roles' from USER_ROLES where login=?"/>
+        </login-module>
+    </authentication>
+</security-domain>
+
+Trzeba w postgresie utworzyć odpowiednie tabele (koniecznie nie jako user postgres, ale jako user catering)
+
+1.Logujemy się jako nasz user
+psql catering catering -W     (jeśli pokazuje się Peer authentication failed for user "catering") to https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-failed-for-user-postgres-when-trying-to-ge . Trzeba zedytować to co pod linijką # "local" is for Unix domain socket connections only
+
+2.Tworzymy tabele i uzupełniamy przykładowym userem
+CREATE TABLE USERS(login VARCHAR(64) PRIMARY KEY, passwd VARCHAR(64));
+CREATE TABLE USER_ROLES(login VARCHAR(64), role VARCHAR(32));
+INSERT into USERS values('admin', 'admin');
+INSERT into USER_ROLES values('admin', 'Manager');
+
+
