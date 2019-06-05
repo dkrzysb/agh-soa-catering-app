@@ -25,6 +25,7 @@ public class DbInitializer {
         EntityManager em = factory.createEntityManager();
 
         seedMenuCategoryTable(em);
+        seedClientTable(em);
     }
 
     private void seedMenuCategoryTable(EntityManager em) {
@@ -44,6 +45,24 @@ public class DbInitializer {
         em.persist(menuCategory2);
         em.persist(menuCategory3);
         em.persist(menuCategory4);
+        em.getTransaction().commit();
+    }
+
+    private void seedClientTable(EntityManager em) {
+        Client client1 = new Client();
+        client1.setName("Mariusz");
+        client1.setSurname("Pudzianowski");
+        client1.setUsername("mpudzianowski");
+        client1.setPassword("pudzian123");
+        Client client2 = new Client();
+        client2.setName("Robert");
+        client2.setSurname("Lewandowski");
+        client2.setUsername("rlewandowski");
+        client2.setPassword("lewy123");
+
+        em.getTransaction().begin();
+        em.persist(client1);
+        em.persist(client2);
         em.getTransaction().commit();
     }
 }

@@ -6,6 +6,9 @@
         <jta-data-source>java:/PostgresDS</jta-data-source>
         <class>pl.agh.kis.soa.catering.server.model.MenuCategory</class>
         <class>pl.agh.kis.soa.catering.server.model.MenuItem</class>
+        <class>pl.agh.kis.soa.catering.server.model.Client</class>
+        <class>pl.agh.kis.soa.catering.server.model.Order</class>
+        <class>pl.agh.kis.soa.catering.server.model.Subscription</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
             <property name="hibernate.hbm2ddl.auto" value="create-drop" />
