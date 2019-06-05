@@ -26,6 +26,7 @@ public class DbInitializer {
 
         seedMenuCategoryTable(em);
         seedClientTable(em);
+        seedUserAccountAndRoleTables(em);
     }
 
     private void seedMenuCategoryTable(EntityManager em) {
@@ -52,17 +53,43 @@ public class DbInitializer {
         Client client1 = new Client();
         client1.setName("Mariusz");
         client1.setSurname("Pudzianowski");
-        client1.setUsername("mpudzianowski");
-        client1.setPassword("pudzian123");
+        UserAccount userAccount1 = new UserAccount();
+        userAccount1.setUsername("mpudzianowski");
+        userAccount1.setPassword("pudzian123");
+        client1.setUserAccount(userAccount1);
+        UserRole userAccount1Role = new UserRole();
+        userAccount1Role.setUsername("mpudzianowski");
+        userAccount1Role.setRole("Client");
         Client client2 = new Client();
         client2.setName("Robert");
         client2.setSurname("Lewandowski");
-        client2.setUsername("rlewandowski");
-        client2.setPassword("lewy123");
+        UserAccount userAccount2 = new UserAccount();
+        userAccount2.setUsername("rlewandowski");
+        userAccount2.setPassword("lewy123");
+        client2.setUserAccount(userAccount2);
+        UserRole userAccount2Role = new UserRole();
+        userAccount2Role.setUsername("rlewandowski");
+        userAccount2Role.setRole("Client");
 
         em.getTransaction().begin();
         em.persist(client1);
         em.persist(client2);
+        em.persist(userAccount1Role);
+        em.persist(userAccount2Role);
+        em.getTransaction().commit();
+    }
+
+    private void seedUserAccountAndRoleTables(EntityManager em) {
+        UserAccount admin = new UserAccount();
+        admin.setUsername("admin");
+        admin.setPassword("admin");
+        UserRole adminRole = new UserRole();
+        adminRole.setUsername("admin");
+        adminRole.setRole("Manager");
+
+        em.getTransaction().begin();
+        em.persist(admin);
+        em.persist(adminRole);
         em.getTransaction().commit();
     }
 }

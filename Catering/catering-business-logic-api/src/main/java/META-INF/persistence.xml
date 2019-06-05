@@ -9,6 +9,8 @@
         <class>pl.agh.kis.soa.catering.server.model.Client</class>
         <class>pl.agh.kis.soa.catering.server.model.Order</class>
         <class>pl.agh.kis.soa.catering.server.model.Subscription</class>
+        <class>pl.agh.kis.soa.catering.server.model.UserAccount</class>
+        <class>pl.agh.kis.soa.catering.server.model.UserRole</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
             <property name="hibernate.hbm2ddl.auto" value="create-drop" />
