@@ -9,6 +9,8 @@
         <title>Detailed report</title>
         <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
     </h:head>
+    <h3>Detailed report</h3>
+    <hr />
     <ui:repeat var="order" value="#{OrdersManager.allClientOrders}">
         <h3>Order date: #{order.date}</h3>
         <h:dataTable value="#{order.menuItems}" var="menuItem"
@@ -33,5 +35,5 @@
             </h:column>
         </h:dataTable><br />
     </ui:repeat>
-    Total price: <h:outputText value="#{OrdersManager.totalPriceOfAllUserOrders}" /> zł
+    Total price: <h:outputText value="#{OrdersManager.totalPriceOfAllClientOrders}" /> zł
 </html>

@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 @ManagedBean(name = "OrdersManager")
@@ -40,7 +41,7 @@ public class OrdersManager {
         return orderPrice;
     }
 
-    public BigDecimal getTotalPriceOfAllUserOrders() {
+    public BigDecimal getTotalPriceOfAllClientOrders() {
         Long clientId = 1l;
         BigDecimal totalPrice = new BigDecimal(0);
         List<Order> allClientOrders = orderService.getAllClientOrders(clientId);
@@ -58,6 +59,31 @@ public class OrdersManager {
         return orderService.getAllClientOrders(clientId);
     }
 
+    public int getLastMonthNumberOfMeals() {
+        Long clientId = 1l;
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.DATE, -30);
+
+        return orderService.getClientOrdersBetweenDates(clientId, calendar.getTime(), now).size();
+    }
+
+    public BigDecimal getLastMonthClientOrdersTotalPrice() {
+        Long clientId = 1l;
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.DATE, -30);
+
+        List<Order> clientOrders = orderService.getClientOrdersBetweenDates(clientId, calendar.getTime(), now);
+        BigDecimal totalPrice = new BigDecimal(0);
+
+        for(Order order :  clientOrders)
+            totalPrice = totalPrice.add(order.getPrice());
+
+        return totalPrice;
+    }
     public int getSubscriptionDays() { return subscriptionDays; }
 
     public void setSubscriptionDays(int subscriptionDays) { this.subscriptionDays = subscriptionDays; }
