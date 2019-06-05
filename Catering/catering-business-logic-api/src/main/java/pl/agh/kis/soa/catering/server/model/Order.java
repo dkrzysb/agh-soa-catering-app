@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -12,13 +13,13 @@ import java.util.List;
 @Table(name = "ClientOrder")
 @Getter
 @Setter
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Client client;
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<MenuItem> menuItems;
     private Date date;
     private BigDecimal price;

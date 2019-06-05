@@ -3,6 +3,7 @@ package pl.agh.kis.soa.catering.client.managers;
 import pl.agh.kis.soa.catering.client.services.MenuItemService;
 import pl.agh.kis.soa.catering.client.services.OrderService;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
+import pl.agh.kis.soa.catering.server.model.Order;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -39,6 +40,24 @@ public class OrdersManager {
         return orderPrice;
     }
 
+    public BigDecimal getTotalPriceOfAllUserOrders() {
+        Long clientId = 1l;
+        BigDecimal totalPrice = new BigDecimal(0);
+        List<Order> allClientOrders = orderService.getAllClientOrders(clientId);
+
+        for(Order order : allClientOrders)
+            for(MenuItem menuItem : order.getMenuItems())
+                totalPrice = totalPrice.add(menuItem.getPrice());
+
+        return totalPrice;
+    }
+
+    public List<Order> getAllClientOrders() {
+        Long clientId = 1l;
+
+        return orderService.getAllClientOrders(clientId);
+    }
+
     public int getSubscriptionDays() { return subscriptionDays; }
 
     public void setSubscriptionDays(int subscriptionDays) { this.subscriptionDays = subscriptionDays; }
@@ -46,6 +65,11 @@ public class OrdersManager {
     public void setMenuItemService(MenuItemService menuItemService) { this.menuItemService = menuItemService; }
 
     public void setOrderService(OrderService orderService) { this.orderService = orderService; }
+
+    public String subscriptionDetails() {
+
+        return "subscription-details";
+    }
 
     public String order() {
         orderedMenuItems = new ArrayList<MenuItem>();

@@ -40,6 +40,10 @@ public class MenuManager {
 
     public List<MenuItem> getAllMenuCategoryItems() { return menuItemService.getAllMenuCategoryItems(menuCategoryId); }
 
+    public List<MenuItem> getAllMenuCategoryItemsForClient(MenuCategory menuCategory) {
+        return menuItemService.getAllMenuCategoryItems(menuCategory.getId());
+    }
+
     public String addMenuCategory() {
         this.menuCategory = new MenuCategory();
         operationType = OperationType.Add;
