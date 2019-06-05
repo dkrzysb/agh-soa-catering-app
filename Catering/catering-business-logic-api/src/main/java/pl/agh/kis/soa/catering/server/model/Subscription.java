@@ -15,12 +15,11 @@ public class Subscription implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<MenuItem> menuItems;
     @ManyToOne
     private Client client;
     private String daysOfTheWeek;
-    private int numberOfTimes;
 }
 
 
