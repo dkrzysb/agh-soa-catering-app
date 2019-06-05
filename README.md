@@ -1,1 +1,1 @@
-# agh-soa-catering-app
+# SOA Catering App
