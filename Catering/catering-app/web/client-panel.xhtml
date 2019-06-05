@@ -12,8 +12,6 @@
     <h:body>
         <h3>Navigation</h3>
         <h:form>
-            <h:commandButton value="Change order" /><br />
-            <h:commandButton value="Cancel order" /><br />
             <h:commandButton value="Manage subscriptions" /><br />
         </h:form>
         <hr />
@@ -41,7 +39,7 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Order</f:facet>
-                    <h:selectBooleanCheckbox value="#{OrdersManager.menuItemsToOrder[menuItem.id]}" />
+                    <h:selectBooleanCheckbox value="#{OrdersManager.orderCheckboxes[menuItem.id]}" />
                 </h:column>
             </h:dataTable>
             <h:commandButton value="Order" action="#{OrdersManager.order}" /><br />

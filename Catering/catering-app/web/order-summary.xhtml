@@ -5,13 +5,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head><title>Order summary</title></h:head>
+    <h:head>
+        <title>Order summary</title>
+        <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
+    </h:head>
     <h:body>
         <h3>Order summary</h3>
         <h:dataTable value="#{OrdersManager.orderedMenuItems}" var="menuItem"
-                     styleClass="book-table"
-                     headerClass="book-table-header"
-                     rowClasses="book-table-even-row, book-table-odd-row">
+                     styleClass="order-table"
+                     headerClass="order-table-header"
+                     rowClasses="order-table-even-row, order-table-odd-row">
             <h:column>
                 <f:facet name="header">Position number</f:facet>
                 #{menuItem.id}
@@ -30,5 +33,9 @@
             </h:column>
         </h:dataTable><br />
         Amount to pay: <h:outputText value="#{OrdersManager.orderPrice}" /> zł
+        <h:form>
+            <h:commandButton value="Confirm" action="#{OrdersManager.confirm}" /><br />
+            <h:commandButton value="Cancel" action="#{OrdersManager.cancel}" />
+        </h:form>
     </h:body>
 </html>
