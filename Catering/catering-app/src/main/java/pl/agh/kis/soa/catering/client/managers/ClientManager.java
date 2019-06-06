@@ -5,6 +5,7 @@ import pl.agh.kis.soa.catering.client.services.OrderService;
 import pl.agh.kis.soa.catering.server.model.Client;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
 import pl.agh.kis.soa.catering.server.model.UserAccount;
+import pl.agh.kis.soa.catering.server.model.UserRole;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
@@ -36,6 +37,8 @@ public class ClientManager {
     }
 
     public String registerUser(){
+        UserRole userRole = clientService.getUserRole("Manager");
+        userAccountL.setUserRole(userRole);
         client.setUserAccount(userAccountL);
         clientService.addClient(client);
         return "login";

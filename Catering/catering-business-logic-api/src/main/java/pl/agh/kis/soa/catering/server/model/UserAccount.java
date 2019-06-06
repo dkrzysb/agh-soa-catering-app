@@ -16,4 +16,10 @@ public class UserAccount implements Serializable {
     private Long  id;
     private String username;
     private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "role_name_id", referencedColumnName = "role"
+    )
+    private UserRole userRole;
 }

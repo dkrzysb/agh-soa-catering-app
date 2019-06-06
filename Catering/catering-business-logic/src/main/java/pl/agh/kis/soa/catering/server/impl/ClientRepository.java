@@ -4,12 +4,15 @@ import pl.agh.kis.soa.catering.server.api.IClientRepository;
 import pl.agh.kis.soa.catering.server.model.Client;
 import pl.agh.kis.soa.catering.server.model.DbInitializer;
 import pl.agh.kis.soa.catering.server.model.Subscription;
+import pl.agh.kis.soa.catering.server.model.UserRole;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.xml.registry.infomodel.User;
 import java.util.List;
 
 @Remote(IClientRepository.class)
@@ -42,6 +45,23 @@ public class ClientRepository implements IClientRepository {
         em.getTransaction().begin();
         em.persist(client);
         em.getTransaction().commit();
+    }
+
+    public UserRole getUserRole(String role) {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<UserRole> query = em.createQuery("select userRole from UserRole userRole where userRole.role = :role", UserRole.class).setParameter("role", role);;
+        try {
+            UserRole userRole = query.getSingleResult();
+            return userRole;
+
+        }
+        catch (NoResultException e){
+            UserRole userRole = new UserRole(role);
+            em.getTransaction().begin();
+            em.persist(userRole);
+            em.getTransaction().commit();
+            return userRole;
+        }
     }
 
 }

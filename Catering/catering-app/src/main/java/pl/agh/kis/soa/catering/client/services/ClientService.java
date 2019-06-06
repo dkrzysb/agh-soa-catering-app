@@ -4,6 +4,7 @@ import pl.agh.kis.soa.catering.server.api.IClientRepository;
 import pl.agh.kis.soa.catering.server.model.Client;
 import pl.agh.kis.soa.catering.server.model.Order;
 import pl.agh.kis.soa.catering.server.model.Subscription;
+import pl.agh.kis.soa.catering.server.model.UserRole;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
@@ -33,5 +34,9 @@ public class ClientService {
 
     public void addClient(Client client){
         clientRepository.addClient(client);
+    }
+
+    public UserRole getUserRole(String role) {
+        return clientRepository.getUserRole(role);
     }
 }
