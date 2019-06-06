@@ -1,9 +1,6 @@
 package pl.agh.kis.soa.catering.server.api;
 
-import pl.agh.kis.soa.catering.server.model.Client;
-import pl.agh.kis.soa.catering.server.model.Order;
-import pl.agh.kis.soa.catering.server.model.Subscription;
-import pl.agh.kis.soa.catering.server.model.UserRole;
+import pl.agh.kis.soa.catering.server.model.*;
 
 import java.util.Date;
 import java.util.List;
@@ -14,4 +11,6 @@ public interface IClientRepository {
     List<Subscription> getAllClientSubscriptions(Long clientId);
     void addClient(Client client);
     UserRole getUserRole(String role);
+    List<UserAccount> getAllUsers();
+    void removeUser(UserAccount userAccount);
 }

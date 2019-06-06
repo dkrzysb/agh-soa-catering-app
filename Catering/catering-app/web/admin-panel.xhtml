@@ -8,6 +8,26 @@
 <h:head>
     <title>Admin panel</title>
     <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
+
+    <style type="text/css">
+        .popup-panel-overlay{
+            background-color: rgba(0,0,0,0.5);
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+        .popup-panel{
+            max-resolution: 100px;
+            background: white;
+            padding: 10px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid;
+        }
+    </style>
 </h:head>
 <h:body>
     <h3>Navigation</h3>
@@ -18,8 +38,14 @@
     <hr />
 
     <h3>Menu</h3>
-    <h:form>
-        <h:dataTable id="usersDT" value="#{UsersManager.allUsers}" var="user"
+    <h:form id="formula">
+
+        <h:commandButton value="Show Popup" action="#{AdminManager.show}">
+            <f:ajax render="formula"/>
+        </h:commandButton>
+
+
+        <h:dataTable id="usersDT" value="#{AdminManager.allUserAccounts}" var="user"
                      styleClass="order-table"
                      headerClass="order-table-header"
                      rowClasses="order-table-odd-row, order-table-even-row">
@@ -29,15 +55,30 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Login</f:facet>
-                #{user.login}
+                #{user.username}
             </h:column>
             <h:column>
-                <h:commandButton value="Update" action="#{MenuManager.updateMenuItem(menuItem)}" />
+                <h:commandButton value="Change Password" action="#{MenuManager.updateMenuItem(menuItem)}" />
             </h:column>
             <h:column>
-                <h:commandButton value="Delete" action="#{MenuManager.deleteMenuItem(menuItem)}" />
+                <h:commandButton value="Delete User" action="#{AdminManager.deleteUser(user)}" />
             </h:column>
         </h:dataTable>
+        <h:panelGroup layout="block" styleClass="popup-panel-overlay" rendered="#{AdminManager.showPopup}">
+            <div class="popup-panel">
+                ULALAL
+                #{AdminManager.showPopup}
+                <h:commandButton value="Show Popup" action="#{AdminManager.hide()}">
+                    <f:ajax render="formula"/>
+                </h:commandButton>
+            </div>
+        </h:panelGroup>
+
     </h:form>
+
+
+
+
+
 </h:body>
 </html>

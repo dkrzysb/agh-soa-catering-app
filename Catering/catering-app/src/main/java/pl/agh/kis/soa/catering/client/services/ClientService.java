@@ -1,10 +1,7 @@
 package pl.agh.kis.soa.catering.client.services;
 
 import pl.agh.kis.soa.catering.server.api.IClientRepository;
-import pl.agh.kis.soa.catering.server.model.Client;
-import pl.agh.kis.soa.catering.server.model.Order;
-import pl.agh.kis.soa.catering.server.model.Subscription;
-import pl.agh.kis.soa.catering.server.model.UserRole;
+import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
@@ -38,5 +35,13 @@ public class ClientService {
 
     public UserRole getUserRole(String role) {
         return clientRepository.getUserRole(role);
+    }
+
+    public List<UserAccount> getAllUsers() {
+        return clientRepository.getAllUsers();
+    }
+
+    public void removeUser(UserAccount userAccount) {
+        clientRepository.removeUser(userAccount);
     }
 }

@@ -25,7 +25,7 @@ public class DbInitializer {
         EntityManager em = factory.createEntityManager();
 
         seedMenuCategoryTable(em);
-//        seedClientTable(em);
+        seedClientTable(em);
         seedUserAccountAndRoleTables(em);
     }
 

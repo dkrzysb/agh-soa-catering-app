@@ -1,10 +1,7 @@
 package pl.agh.kis.soa.catering.server.impl;
 
 import pl.agh.kis.soa.catering.server.api.IClientRepository;
-import pl.agh.kis.soa.catering.server.model.Client;
-import pl.agh.kis.soa.catering.server.model.DbInitializer;
-import pl.agh.kis.soa.catering.server.model.Subscription;
-import pl.agh.kis.soa.catering.server.model.UserRole;
+import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -61,6 +58,24 @@ public class ClientRepository implements IClientRepository {
             em.persist(userRole);
             em.getTransaction().commit();
             return userRole;
+        }
+    }
+
+    public List<UserAccount> getAllUsers() {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<UserAccount> query = em.createQuery("select userAccount from UserAccount userAccount", UserAccount.class);
+        return query.getResultList();
+    }
+
+
+    public void removeUser(UserAccount userAccount) {
+        EntityManager em = factory.createEntityManager();
+        UserAccount userAccount1 = em.find(UserAccount.class, userAccount.getId());
+
+        if(userAccount1 != null) {
+            em.getTransaction().begin();
+            em.remove(userAccount1);
+            em.getTransaction().commit();
         }
     }
 

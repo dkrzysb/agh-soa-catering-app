@@ -9,17 +9,17 @@
 <h:body>
     <h:form>
         Login:<br/>
-        <h:inputText value="#{ClientManager.userAccountL.username}" required="true" label="Serving size" /><br />
+        <h:inputText value="#{RegisterManager.userAccountL.username}" required="true" label="Serving size" /><br />
         Hasło:<br />
-        <h:inputText value="#{ClientManager.userAccountL.password}" required="true" label="Price" /><br />
+        <h:inputText value="#{RegisterManager.userAccountL.password}" required="true" label="Price" /><br />
         Hasło2:<br />
-        <h:inputText value="#{ClientManager.userAccountL.password}" required="true" label="Price" /><br />
+        <h:inputText value="#{RegisterManager.userAccountL.password}" required="true" label="Price" /><br />
         Imie:<br />
-        <h:inputText value="#{ClientManager.client.name}" required="true" label="Price" /><br />
+        <h:inputText value="#{RegisterManager.client.name}" required="true" label="Price" /><br />
         Nazwisko:<br />
-        <h:inputText value="#{ClientManager.client.surname}" required="true" label="Price" /><br />
+        <h:inputText value="#{RegisterManager.client.surname}" required="true" label="Price" /><br />
 
-        <h:commandButton value="Submit" action="#{ClientManager.registerUser}" />
+        <h:commandButton value="Submit" action="#{RegisterManager.registerUser}" />
         <h:messages style = "color:red;margin:8px;" />
     </h:form>
 </h:body>

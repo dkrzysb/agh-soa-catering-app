@@ -12,9 +12,9 @@ import javax.faces.bean.*;
 import javax.xml.registry.infomodel.User;
 
 
-@ManagedBean(name = "ClientManager")
+@ManagedBean(name = "RegisterManager")
 @RequestScoped
-public class ClientManager {
+public class RegisterManager {
 
     @ManagedProperty(value="#{clientService}")
     private ClientService clientService;
