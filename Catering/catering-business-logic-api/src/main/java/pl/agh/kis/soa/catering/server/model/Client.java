@@ -23,4 +23,12 @@ public class Client implements Serializable {
     private List<Subscription> subscriptions;
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private UserAccount userAccount;
+
+    public Client() {
+    }
+
+    public Client(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
 }

@@ -1,20 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-<body>
-<h1>Proszę się zarejestrować</h1>
-<form method="post" action="j_security_check" name="loginForm">
-    <h:panelGrid columns="2">
-        <h:outputLabel id="userNameLabel" for="j_username" value="Nazwa użytkownika:"/>
-        <h:inputText id="j_username" />
-        <h:outputLabel id="passwordLabel" for="j_password" value="Hasło:"/>
-        <h:inputSecret id="j_password" />
-        <div/>
-        <h:panelGroup>
-            <h:commandButton type="submit" value="Zaloguj się"/>
-            <h:commandButton type="reset" value="Wyczyść"/>
-        </h:panelGroup>
-    </h:panelGrid>
-</form>
-</body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head><title>Register</title></h:head>
+<h:body>
+    <h:form>
+        Login:<br/>
+        <h:inputText value="#{ClientManager.userAccountL.username}" required="true" label="Serving size" /><br />
+        Hasło:<br />
+        <h:inputText value="#{ClientManager.userAccountL.password}" required="true" label="Price" /><br />
+        Hasło2:<br />
+        <h:inputText value="#{ClientManager.userAccountL.password}" required="true" label="Price" /><br />
+        Imie:<br />
+        <h:inputText value="#{ClientManager.client.name}" required="true" label="Price" /><br />
+        Nazwisko:<br />
+        <h:inputText value="#{ClientManager.client.surname}" required="true" label="Price" /><br />
+
+        <h:commandButton value="Submit" action="#{ClientManager.registerUser}" />
+        <h:messages style = "color:red;margin:8px;" />
+    </h:form>
+</h:body>
 </html>

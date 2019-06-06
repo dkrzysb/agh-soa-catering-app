@@ -34,7 +34,14 @@ public class ClientRepository implements IClientRepository {
         EntityManager em = factory.createEntityManager();
         TypedQuery<Subscription> query = em.createQuery("select subscription from Subscription subscription where subscription.client.id = :clientId", Subscription.class)
                 .setParameter("clientId", clientId);
-
         return query.getResultList();
     }
+
+    public void addClient(Client client){
+        EntityManager em = factory.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(client);
+        em.getTransaction().commit();
+    }
+
 }

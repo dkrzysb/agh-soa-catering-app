@@ -11,4 +11,5 @@ public interface IClientRepository {
     Client getClientById(Long clientId);
     List<Client> getAllClients();
     List<Subscription> getAllClientSubscriptions(Long clientId);
+    void addClient(Client client);
 }

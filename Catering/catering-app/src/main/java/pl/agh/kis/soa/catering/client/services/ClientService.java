@@ -6,13 +6,15 @@ import pl.agh.kis.soa.catering.server.model.Order;
 import pl.agh.kis.soa.catering.server.model.Subscription;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "clientService", eager = true)
-@ApplicationScoped
+@RequestScoped
 public class ClientService {
     @EJB(lookup = "java:global/catering-business-logic/ClientRepository")
     IClientRepository clientRepository;
@@ -27,5 +29,9 @@ public class ClientService {
 
     public List<Subscription> getAllClientSubscriptions(Long clientId) {
         return clientRepository.getAllClientSubscriptions(clientId);
+    }
+
+    public void addClient(Client client){
+        clientRepository.addClient(client);
     }
 }
