@@ -17,16 +17,17 @@ całą paczkę catering-app
 AUTHENTIFICATION
 W standalone.xml w sekcji <security-domains> dokleić:
 
-<security-domain name="postgresqldomain" cache-type="default">
+     <security-domain name="postgresqldomain" cache-type="default">
                     <authentication>
                         <login-module code="Database" flag="required">
                             <module-option name="dsJndiName" value="java:/PostgresDS"/>
                             <module-option name="principalsQuery" value="select password from USERACCOUNT where username=?"/>
                             <module-option name="rolesQuery" value="select role, 'Roles' from USERROLE join USERACCOUNT on (role = role_name_id) where username=?"/>
+                            <module-option name="hashAlgorithm" value="SHA"/>
+                            <module-option name="hashEncoding" value="base64"/>
                         </login-module>
                     </authentication>
                 </security-domain>
-
 Trzeba w postgresie utworzyć odpowiednie tabele (koniecznie nie jako user postgres, ale jako user catering)
 
 1.Logujemy się jako nasz user
