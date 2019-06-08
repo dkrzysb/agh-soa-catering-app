@@ -21,10 +21,14 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
+                    <div class="navbar-nav mr-auto">
                         <a class="nav-item nav-link" href="#{request.contextPath}/manager-panel.xhtml">Manager Panel<span class="sr-only">(current)</span></a>
                         <a class="nav-item nav-link" href="#{request.contextPath}/client-panel.xhtml">Client Panel</a>
                         <a class="nav-item nav-link" href="#{request.contextPath}/admin-panel.xhtml">Admin Panel</a>
+                    </div>
+                    <div class="justify-content-right float-right" >
+                        <a class="nav-item" style="margin-right: 20px">Cześć, Login!</a>
+                        <h:commandButton styleClass="btn btn-outline-secondary" value="logout" action="#{AuthBean.logout}" />
                     </div>
                 </div>
             </div>
