@@ -15,15 +15,17 @@
     <h:body>
 
         <div class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#{request.contextPath}/">Catering</a>
-            <button class="navbar-toggler" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="#{request.contextPath}/manager-panel.xhtml">Manager Panel<span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="#{request.contextPath}/client-panel.xhtml">Client Panel</a>
-                    <a class="nav-item nav-link" href="#{request.contextPath}/admin-panel.xhtml">Admin Panel</a>
+            <div class="container">
+                <a class="navbar-brand" href="#{request.contextPath}/">Catering</a>
+                <button class="navbar-toggler" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="#{request.contextPath}/manager-panel.xhtml">Manager Panel<span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="#{request.contextPath}/client-panel.xhtml">Client Panel</a>
+                        <a class="nav-item nav-link" href="#{request.contextPath}/admin-panel.xhtml">Admin Panel</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,14 +33,13 @@
         <div class="container">
         <h3>Menu</h3>
         <h:form>
-            <h:selectOneMenu id="menuCategories" value="#{MenuManager.menuCategoryId}">
+            <h:selectOneMenu styleClass="form-control" id="menuCategories" value="#{MenuManager.menuCategoryId}">
                 <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
                 <f:ajax render="menuItemsDT" />
             </h:selectOneMenu><br />
             <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
-                         styleClass="order-table"
-                         headerClass="order-table-header"
-                         rowClasses="order-table-odd-row, order-table-even-row">
+                         styleClass="table thead-dark table-striped"
+                         rowClasses="col">
                 <h:column>
                     <f:facet name="header">Position number</f:facet>
                     #{menuItem.id}
