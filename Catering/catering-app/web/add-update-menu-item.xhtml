@@ -5,21 +5,52 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head><title>MenuItem administration</title></h:head>
+    <h:head><title>MenuItem administration</title>
+        <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script></h:head>
     <h:body>
         <h:form>
-            Name:<br />
-            <h:inputText value="#{MenuManager.menuItem.name}" required="true" label="Name" /><br />
-            Serving size:<br/>
-            <h:inputText value="#{MenuManager.menuItem.servingSize}" required="true" label="Serving size" /><br />
-            Price:<br />
-            <h:inputText value="#{MenuManager.menuItem.price}" required="true" label="Price" /><br />
-            Menu category:<br />
-            <h:selectOneMenu value="#{MenuManager.menuCategoryId}">
-                <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemLabel="#{menuCategory.name}" itemValue="#{menuCategory.id}" />
-            </h:selectOneMenu><br />
-            <h:commandButton value="Submit" action="#{MenuManager.addOrUpdateMenuItem}" />
-            <h:messages style = "color:red;margin:8px;" />
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" style="font-size: large" href="#{request.contextPath}/manager-panel.xhtml">Catering-Manager</a>
+                    <button class="navbar-toggler" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h:form>
+
+
+        <div class="container" style="width: 200px">
+            <h:form>
+                <div class="form-group">
+                    <label for="itemName">Name:</label>
+                    <h:inputText id="itemName" class="form-control" value="#{MenuManager.menuItem.name}" required="true" label="Name" /><br/>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemSize">Serving size:</label>
+                    <h:inputText id="itemSize" class="form-control" value="#{MenuManager.menuItem.servingSize}" required="true" label="Name" /><br/>
+                </div>
+                <div class="form-group">
+                    <label for="itemPrice">Price:</label>
+                    <h:inputText id="itemPrice" class="form-control" value="#{MenuManager.menuItem.price}" required="true" label="Name" /><br/>
+                </div>
+
+                Menu category:<br />
+                <h:selectOneMenu styleClass="form-control" value="#{MenuManager.menuCategoryId}">
+                    <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemLabel="#{menuCategory.name}" itemValue="#{menuCategory.id}" />
+                </h:selectOneMenu><br />
+                <h:commandButton value="Submit" action="#{MenuManager.addOrUpdateMenuItem}" styleClass="btn btn-primary" style="width: 100%"/>
+                <h:messages style = "color:red;margin:8px;" />
+            </h:form>
+        </div>
     </h:body>
 </html>
