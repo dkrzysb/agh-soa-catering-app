@@ -28,4 +28,16 @@ public class OrderService {
     public List<Order> getClientOrdersBetweenDates(Long clientId, Date fromDate, Date toDate) {
         return orderRepository.getClientOrdersBetweenDates(clientId, fromDate, toDate);
     }
+
+    public List<Order> getAllUnconfirmedOrders() {
+        return orderRepository.getAllUnconfirmedOrders();
+    }
+
+    public void confirmOrder(Long orderId) {
+        orderRepository.confirmOrder(orderId);
+    }
+
+    public Order getOrderById(Long orderId) {
+        return orderRepository.getOrderById(orderId);
+    }
 }
