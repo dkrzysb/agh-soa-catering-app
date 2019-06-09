@@ -32,43 +32,47 @@
 
         <div class="container">
             <h3>Menu</h3>
-            <h:form>
-                <h:selectOneMenu styleClass="form-control" id="menuCategories" value="#{MenuManager.menuCategoryId}">
-                    <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
-                    <f:ajax render="menuItemsDT" />
-                </h:selectOneMenu>
-                <br/>
-                <h:commandButton value="Update category" styleClass="btn btn-primary" action="#{MenuManager.updateMenuCategory}" />
-                <h:commandButton value="Delete category" styleClass="btn btn-danger"  action="#{MenuManager.deleteMenuCategory}" />
-                <br/>
-                <br/>
-                <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
-                             styleClass="table thead-dark table-striped"
-                             rowClasses="col">
-                    <h:column>
-                        <f:facet name="header">Position number</f:facet>
-                        #{menuItem.id}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Name</f:facet>
-                        #{menuItem.name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Serving size</f:facet>
-                        #{menuItem.servingSize}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Price</f:facet>
-                        #{menuItem.price}
-                    </h:column>
-                    <h:column>
-                        <h:commandButton value="Update" styleClass="btn btn-primary" action="#{MenuManager.updateMenuItem(menuItem)}" />
-                    </h:column>
-                    <h:column>
-                        <h:commandButton value="Delete" styleClass="btn btn-danger" action="#{MenuManager.deleteMenuItem(menuItem)}" />
-                    </h:column>
-                </h:dataTable>
-            </h:form>
+            <h:panelGroup id="menuItems">
+                <h:form>
+                    <h:selectOneMenu styleClass="form-control" id="menuCategories" value="#{MenuManager.menuCategoryId}">
+                        <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
+                        <f:ajax render="menuItemsDT" />
+                    </h:selectOneMenu>
+                    <br/>
+                    <h:commandButton value="Update category" styleClass="btn btn-primary" action="#{MenuManager.updateMenuCategory}" />
+                    <h:commandButton value="Delete category" styleClass="btn btn-danger"  action="#{MenuManager.deleteMenuCategory}" />
+                    <br/>
+                    <br/>
+                    <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
+                                 styleClass="table thead-dark table-striped"
+                                 rowClasses="col">
+                        <h:column>
+                            <f:facet name="header">Position number</f:facet>
+                            #{menuItem.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            #{menuItem.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Serving size</f:facet>
+                            #{menuItem.servingSize}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            #{menuItem.price}
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="Update" styleClass="btn btn-primary" action="#{MenuManager.updateMenuItem(menuItem)}" />
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="Delete" styleClass="btn btn-danger" action="#{MenuManager.deleteMenuItem(menuItem)}">
+                                <f:ajax execute="@form" render="menuItems" />
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </h:panelGroup>
         </div>
     </h:body>
 </html>
