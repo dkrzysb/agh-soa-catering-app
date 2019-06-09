@@ -23,6 +23,14 @@ public class ClientRepository implements IClientRepository {
         return em.find(Client.class, clientId);
     }
 
+    public Client getClientByUsername(String username) {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<Client> query = em.createQuery("select client from Client client where client.userAccount.username = :username", Client.class)
+                .setParameter("username", username);
+
+        return query.getSingleResult();
+    }
+
     public List<Client> getAllClients() {
         EntityManager em = factory.createEntityManager();
         TypedQuery<Client> query = em.createQuery("select client from Client client", Client.class);

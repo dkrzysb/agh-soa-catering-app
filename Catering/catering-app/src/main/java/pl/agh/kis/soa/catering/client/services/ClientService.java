@@ -4,15 +4,12 @@ import pl.agh.kis.soa.catering.server.api.IClientRepository;
 import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.*;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "clientService", eager = true)
-@RequestScoped
+@SessionScoped
 public class ClientService {
     @EJB(lookup = "java:global/catering-business-logic/ClientRepository")
     IClientRepository clientRepository;
@@ -20,6 +17,8 @@ public class ClientService {
     public Client getClientById(Long clientId) {
         return clientRepository.getClientById(clientId);
     }
+
+    public Client getClientByUsername(String username) { return clientRepository.getClientByUsername(username); }
 
     public List<Client> getAllClients() {
         return clientRepository.getAllClients();

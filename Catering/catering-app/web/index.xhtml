@@ -16,7 +16,7 @@
 
         <div class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="#{request.contextPath}/">Catering</a>
+                <a class="navbar-brand" style="font-size: large" href="#{request.contextPath}/">Catering</a>
                 <button class="navbar-toggler" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,8 +27,8 @@
                         <a class="nav-item nav-link" href="#{request.contextPath}/admin-panel.xhtml">Admin Panel</a>
                     </div>
                     <div class="justify-content-right float-right" >
-                        <a class="nav-item" style="margin-right: 20px">Cześć, Login!</a>
-                        <h:commandButton styleClass="btn btn-outline-secondary" value="logout" action="#{AuthBean.logout}" />
+                        <a class="nav-item" style="margin-right: 20px">Cześć, #{request.remoteUser}!</a>
+                        <h:commandButton styleClass="btn btn-outline-secondary" value="Logout" action="#{AuthBean.logout}" />
                     </div>
                 </div>
             </div>

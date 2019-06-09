@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IClientRepository {
     Client getClientById(Long clientId);
+    Client getClientByUsername(String username);
     List<Client> getAllClients();
     List<Subscription> getAllClientSubscriptions(Long clientId);
     void addClient(Client client);

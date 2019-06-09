@@ -7,47 +7,70 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Custom report</title>
-        <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
     </h:head>
-    <h3>Custom report</h3>
-    <hr />
     <h:form>
-        From date: <br />
-        <h:inputText value="#{OrdersManager.fromDate}">
-            <f:convertDateTime pattern="yyyy-MM-dd"/>
-        </h:inputText><br />
-        To date: <br />
-        <h:inputText value="#{OrdersManager.toDate}">
-            <f:convertDateTime pattern="yyyy-MM-dd"/>
-        </h:inputText><br />
-        <h:commandButton value="Get client orders">
-            <f:ajax execute="@form" render="orders" />
-        </h:commandButton>
+        <div class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" style="font-size: large" href="#{request.contextPath}/">Catering</a>
+                <button class="navbar-toggler" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <h:commandButton value="Order" style="margin-right: 15px" styleClass="btn btn-outline-secondary btn-sm" action="client-panel" />
+                        <h:commandButton value="Manage subscriptions" style="margin-right: 15px" styleClass="btn btn-outline-secondary btn-sm" action="subscription-panel" />
+                        <h:commandButton value="Detailed report" style="margin-right: 15px" styleClass="btn btn-secondary btn-sm" action="detailed-report" />
+                        <h:commandButton value="Current month report" style="margin-right: 15px" styleClass="btn btn-outline-secondary btn-sm" action="current-month-report-client" />
+                        <h:commandButton value="Custom report" styleClass="btn btn-outline-secondary btn-sm" action="custom-report" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </h:form>
-    <h:panelGroup id="orders">
-        <ui:repeat var="order" value="#{OrdersManager.clientOrdersBetweenDates}">
-            <h4>Order date: #{order.date}</h4>
-            <h:dataTable value="#{order.menuItems}" var="menuItem"
-                         styleClass="order-table"
-                         headerClass="order-table-header"
-                         rowClasses="order-table-even-row, order-table-odd-row">
-                <h:column>
-                    <f:facet name="header">Position number</f:facet>
-                    #{menuItem.id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Name</f:facet>
-                    #{menuItem.name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Serving size</f:facet>
-                    #{menuItem.servingSize}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Price</f:facet>
-                    #{menuItem.price}
-                </h:column>
-            </h:dataTable><br />
-        </ui:repeat>
-    </h:panelGroup>
+    <div class="container">
+        <h3>Custom report</h3>
+        <hr />
+        <h:form>
+            From date: <br />
+            <h:inputText value="#{OrdersManager.fromDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:inputText><br />
+            To date: <br />
+            <h:inputText value="#{OrdersManager.toDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:inputText><br />
+            <h:commandButton value="Get client orders" styleClass="btn btn-primary">
+                <f:ajax execute="@form" render="orders" />
+            </h:commandButton>
+        </h:form><br />
+        <h:panelGroup id="orders">
+            <ui:repeat var="order" value="#{OrdersManager.clientOrdersBetweenDates}">
+                <h4>Order date: #{order.date}</h4>
+                <h:dataTable value="#{order.menuItems}" var="menuItem"
+                             styleClass="table thead-dark table-striped"
+                             rowClasses="col">
+                    <h:column>
+                        <f:facet name="header">Position number</f:facet>
+                        #{menuItem.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                        #{menuItem.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Serving size</f:facet>
+                        #{menuItem.servingSize}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                        #{menuItem.price}
+                    </h:column>
+                </h:dataTable><br />
+            </ui:repeat>
+        </h:panelGroup>
+    </div>
 </html>

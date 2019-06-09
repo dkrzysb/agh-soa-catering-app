@@ -1,8 +1,10 @@
 package pl.agh.kis.soa.catering.client.managers;
 
+import pl.agh.kis.soa.catering.client.services.ClientService;
 import pl.agh.kis.soa.catering.client.services.MenuItemService;
 import pl.agh.kis.soa.catering.client.services.OrderService;
 import pl.agh.kis.soa.catering.client.services.SubscriptionService;
+import pl.agh.kis.soa.catering.server.model.Client;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
 import pl.agh.kis.soa.catering.server.model.Order;
 import pl.agh.kis.soa.catering.server.model.Subscription;
@@ -10,6 +12,7 @@ import pl.agh.kis.soa.catering.server.model.Subscription;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -28,6 +31,8 @@ public class OrdersManager {
     private OrderService orderService;
     @ManagedProperty(value="#{subscriptionService}")
     private SubscriptionService subscriptionService;
+    @ManagedProperty(value="#{clientService}")
+    private ClientService clientService;
 
     public Map<Long, Boolean> getOrderCheckboxes() {
         return orderCheckboxes;
@@ -53,9 +58,9 @@ public class OrdersManager {
     }
 
     public BigDecimal getTotalPriceOfAllClientOrders() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
         BigDecimal totalPrice = new BigDecimal(0);
-        List<Order> allClientOrders = orderService.getAllClientOrders(clientId);
+        List<Order> allClientOrders = orderService.getAllClientOrders(client.getId());
 
         for(Order order : allClientOrders)
             for(MenuItem menuItem : order.getMenuItems())
@@ -65,35 +70,35 @@ public class OrdersManager {
     }
 
     public List<Order> getAllClientOrders() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
 
-        return orderService.getAllClientOrders(clientId);
+        return orderService.getAllClientOrders(client.getId());
     }
 
     public List<Order> getClientOrdersBetweenDates() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
 
         if(fromDate != null && toDate != null)
-            return orderService.getClientOrdersBetweenDates(clientId, fromDate, toDate);
+            return orderService.getClientOrdersBetweenDates(client.getId(), fromDate, toDate);
         return new ArrayList<>();
     }
 
     public int getCurrentMonthNumberOfMeals() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
         Date now = new Date();
         Date fromDate = new Date(now.getYear(), now.getMonth(), 1);
         Date toDate = new Date(now.getYear(), now.getMonth() , Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        return orderService.getClientOrdersBetweenDates(clientId, fromDate, toDate).size();
+        return orderService.getClientOrdersBetweenDates(client.getId(), fromDate, toDate).size();
     }
 
     public BigDecimal getCurrentMonthClientOrdersTotalPrice() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
         Date now = new Date();
         Date fromDate = new Date(now.getYear(), now.getMonth(), 1);
         Date toDate = new Date(now.getYear(), now.getMonth() , Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        List<Order> clientOrders = orderService.getClientOrdersBetweenDates(clientId, fromDate, toDate);
+        List<Order> clientOrders = orderService.getClientOrdersBetweenDates(client.getId(), fromDate, toDate);
         BigDecimal totalPrice = new BigDecimal(0);
 
         for(Order order :  clientOrders)
@@ -103,9 +108,9 @@ public class OrdersManager {
     }
 
     public List<Subscription> getAllClientSubscriptions() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
 
-        return subscriptionService.getAllClientSubscriptions(clientId);
+        return subscriptionService.getAllClientSubscriptions(client.getId());
     }
 
     public String getSubscriptionDaysOfTheWeekExplication(String subscribedDaysOfTheWeek) {
@@ -129,6 +134,8 @@ public class OrdersManager {
     public void setOrderService(OrderService orderService) { this.orderService = orderService; }
 
     public void setSubscriptionService(SubscriptionService subscriptionService) { this.subscriptionService = subscriptionService; }
+
+    public void setClientService(ClientService clientService) { this.clientService = clientService; }
 
     public void setSubscriptionDaysOfTheWeek(String[] subscriptionDaysOfTheWeek) { this.subscriptionDaysOfTheWeek = subscriptionDaysOfTheWeek; }
 
@@ -156,9 +163,9 @@ public class OrdersManager {
     }
 
     public String confirmOrder() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
 
-        orderService.addOrder(clientId, orderedMenuItems, new Date(), getOrderPrice());
+        orderService.addOrder(client.getId(), orderedMenuItems, new Date(), getOrderPrice());
         orderedMenuItems = new ArrayList<MenuItem>();
 
         return "client-panel";
@@ -171,11 +178,11 @@ public class OrdersManager {
     }
 
     public String confirmSubscription() {
-        Long clientId = 1l;
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
         String subscribedDaysOfTheWeek = String.join("#", subscriptionDaysOfTheWeek);
 
         if(!subscribedDaysOfTheWeek.equals(""))
-            subscriptionService.addSubscription(orderedMenuItems, clientId, subscribedDaysOfTheWeek);
+            subscriptionService.addSubscription(orderedMenuItems, client.getId(), subscribedDaysOfTheWeek);
 
         return "client-panel";
     }

@@ -53,14 +53,12 @@ public class RegisterManager {
         String base64String = Base64.encodeBase64String(hash);
         System.out.println("skrót hasła: " + base64String);
 
-
-
-
         userAccountL.setPassword(base64String);
         UserRole userRole = clientService.getUserRole("Manager");
         userAccountL.setUserRole(userRole);
         client.setUserAccount(userAccountL);
         clientService.addClient(client);
+
         return "login";
     }
 
@@ -71,6 +69,4 @@ public class RegisterManager {
         client = new Client();
         userAccountL = new UserAccount();
     }
-
-
 }

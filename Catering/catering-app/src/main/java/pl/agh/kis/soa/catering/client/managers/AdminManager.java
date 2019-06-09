@@ -52,6 +52,4 @@ public class AdminManager {
 
         return "admin-panel";
     }
-
-
 }
