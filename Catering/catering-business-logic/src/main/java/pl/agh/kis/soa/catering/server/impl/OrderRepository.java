@@ -31,6 +31,8 @@ public class OrderRepository implements IOrderRepository {
         order.setMenuItems(menuItems);
         order.setDate(date);
         order.setPrice(price);
+        order.setConfirmed(false);
+        order.setShipped(false);
         client.getOrders().add(order);
 
         em.getTransaction().begin();
@@ -57,5 +59,28 @@ public class OrderRepository implements IOrderRepository {
         TypedQuery<Order> query = em.createQuery(criteria);
 
         return query.getResultList();
+    }
+
+    public List<Order> getAllUnconfirmedOrders() {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<Order> query = em.createQuery("select order from Order order where order.confirmed = false", Order.class);
+
+        return query.getResultList();
+    }
+
+    public void confirmOrder(Long orderId) {
+        EntityManager em = factory.createEntityManager();
+        Order order = em.find(Order.class, orderId);
+
+        em.getTransaction().begin();
+        order.setConfirmed(true);
+        em.getTransaction().commit();
+    }
+
+    public Order getOrderById(Long orderId) {
+        EntityManager em = factory.createEntityManager();
+        Order order = em.find(Order.class, orderId);
+
+        return order;
     }
 }

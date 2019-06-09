@@ -23,4 +23,6 @@ public class Order implements Serializable {
     private List<MenuItem> menuItems;
     private Date date;
     private BigDecimal price;
+    private Boolean confirmed;
+    private Boolean shipped;
 }
