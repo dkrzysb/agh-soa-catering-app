@@ -12,7 +12,7 @@
     <h3>Detailed report</h3>
     <hr />
     <ui:repeat var="order" value="#{OrdersManager.allClientOrders}">
-        <h3>Order date: #{order.date}</h3>
+        <h4>Order date: #{order.date}</h4>
         <h:dataTable value="#{order.menuItems}" var="menuItem"
                      styleClass="order-table"
                      headerClass="order-table-header"

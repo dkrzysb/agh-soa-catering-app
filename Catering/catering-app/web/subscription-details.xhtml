@@ -5,12 +5,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head><title>Subscription details</title></h:head>
+    <h:head>
+        <title>Subscription details</title>
+        <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
+    </h:head>
     <h:body>
         <h3>Subscription details</h3>
         <h:form>
-            Days of subscriptions: <br />
-            <h:inputText value="#{OrdersManager.subscriptionDays}" /><br />
+            Days of week: <br />
+            <h:selectManyCheckbox value="#{OrdersManager.subscriptionDaysOfTheWeek}">
+                <f:selectItem itemLabel="Monday" itemValue="MON" />
+                <f:selectItem itemLabel="Tuesday" itemValue="TUE" />
+                <f:selectItem itemLabel="Wednesday" itemValue="WED" />
+                <f:selectItem itemLabel="Thursday" itemValue="THU" />
+                <f:selectItem itemLabel="Friday" itemValue="FRI" />
+                <f:selectItem itemLabel="Saturday" itemValue="SAT" />
+                <f:selectItem itemLabel="Sunday" itemValue="SUN" />
+            </h:selectManyCheckbox>
+            <h:commandButton value="Confirm" action="#{OrdersManager.confirmSubscription}" /><br />
+            <h:commandButton value="Cancel" action="#{OrdersManager.cancelSubscription}" />
         </h:form>
     </h:body>
 </html>

@@ -2,14 +2,15 @@ package pl.agh.kis.soa.catering.client.managers;
 
 import pl.agh.kis.soa.catering.client.services.MenuItemService;
 import pl.agh.kis.soa.catering.client.services.OrderService;
+import pl.agh.kis.soa.catering.client.services.SubscriptionService;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
 import pl.agh.kis.soa.catering.server.model.Order;
+import pl.agh.kis.soa.catering.server.model.Subscription;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.*;
 
 @ManagedBean(name = "OrdersManager")
@@ -17,12 +18,14 @@ import java.util.*;
 public class OrdersManager {
     private Map<Long, Boolean> orderCheckboxes = new HashMap<Long, Boolean>();
     private List<MenuItem> orderedMenuItems;
-    private int subscriptionDays;
+    private String[] subscriptionDaysOfTheWeek;
 
     @ManagedProperty(value="#{menuItemService}")
     private MenuItemService menuItemService;
     @ManagedProperty(value="#{orderService}")
     private OrderService orderService;
+    @ManagedProperty(value="#{subscriptionService}")
+    private SubscriptionService subscriptionService;
 
     public Map<Long, Boolean> getOrderCheckboxes() {
         return orderCheckboxes;
@@ -31,6 +34,8 @@ public class OrdersManager {
     public List<MenuItem> getOrderedMenuItems() {
         return orderedMenuItems;
     }
+
+    public String[] getSubscriptionDaysOfTheWeek() { return subscriptionDaysOfTheWeek; }
 
     public BigDecimal getOrderPrice() {
         BigDecimal orderPrice = new BigDecimal(0);
@@ -62,21 +67,19 @@ public class OrdersManager {
     public int getLastMonthNumberOfMeals() {
         Long clientId = 1l;
         Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        calendar.add(Calendar.DATE, -30);
+        Date fromDate = new Date(now.getYear(), now.getMonth(), 1);
+        Date toDate = new Date(now.getYear(), now.getMonth() , Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        return orderService.getClientOrdersBetweenDates(clientId, calendar.getTime(), now).size();
+        return orderService.getClientOrdersBetweenDates(clientId, fromDate, toDate).size();
     }
 
     public BigDecimal getLastMonthClientOrdersTotalPrice() {
         Long clientId = 1l;
         Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        calendar.add(Calendar.DATE, -30);
+        Date fromDate = new Date(now.getYear(), now.getMonth(), 1);
+        Date toDate = new Date(now.getYear(), now.getMonth() , Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        List<Order> clientOrders = orderService.getClientOrdersBetweenDates(clientId, calendar.getTime(), now);
+        List<Order> clientOrders = orderService.getClientOrdersBetweenDates(clientId, fromDate, toDate);
         BigDecimal totalPrice = new BigDecimal(0);
 
         for(Order order :  clientOrders)
@@ -84,18 +87,36 @@ public class OrdersManager {
 
         return totalPrice;
     }
-    public int getSubscriptionDays() { return subscriptionDays; }
 
-    public void setSubscriptionDays(int subscriptionDays) { this.subscriptionDays = subscriptionDays; }
+    public List<Subscription> getAllClientSubscriptions() {
+        Long clientId = 1l;
+
+        return subscriptionService.getAllClientSubscriptions(clientId);
+    }
+
+    public String getSubscriptionDaysOfTheWeekExplication(String subscribedDaysOfTheWeek) {
+        String daysOfTheWeek = subscribedDaysOfTheWeek;
+
+        daysOfTheWeek = daysOfTheWeek
+                .replace("MON", "Monday")
+                .replace("TUE", "Tuesday")
+                .replace("WED", "Wednesday")
+                .replace("THU", "Thursday")
+                .replace("FRI", "Friday")
+                .replace("SAT", "Saturday")
+                .replace("SUN", "Sunday")
+                .replace("#", ", ");
+
+        return daysOfTheWeek;
+    }
 
     public void setMenuItemService(MenuItemService menuItemService) { this.menuItemService = menuItemService; }
 
     public void setOrderService(OrderService orderService) { this.orderService = orderService; }
 
-    public String subscriptionDetails() {
+    public void setSubscriptionService(SubscriptionService subscriptionService) { this.subscriptionService = subscriptionService; }
 
-        return "subscription-details";
-    }
+    public void setSubscriptionDaysOfTheWeek(String[] subscriptionDaysOfTheWeek) { this.subscriptionDaysOfTheWeek = subscriptionDaysOfTheWeek; }
 
     public String order() {
         orderedMenuItems = new ArrayList<MenuItem>();
@@ -110,8 +131,13 @@ public class OrdersManager {
         return "order-summary";
     }
 
-    public String confirm() {
-        // TODO: replace this mock with client got from SessionContext
+    public String subscribe() {
+        order();
+
+        return "subscription-details";
+    }
+
+    public String confirmOrder() {
         Long clientId = 1l;
 
         orderService.addOrder(clientId, orderedMenuItems, new Date(), getOrderPrice());
@@ -120,14 +146,31 @@ public class OrdersManager {
         return "client-panel";
     }
 
-    public String cancel() {
+    public String cancelOrder() {
         orderedMenuItems = new ArrayList<MenuItem>();
 
         return "client-panel";
     }
 
-    public String subscribe() {
+    public String confirmSubscription() {
+        Long clientId = 1l;
+        String subscribedDaysOfTheWeek = String.join("#", subscriptionDaysOfTheWeek);
 
-        return "subscription-details";
+        if(!subscribedDaysOfTheWeek.equals(""))
+            subscriptionService.addSubscription(orderedMenuItems, clientId, subscribedDaysOfTheWeek);
+
+        return "client-panel";
+    }
+
+    public String cancelSubscription() {
+        orderedMenuItems = new ArrayList<MenuItem>();
+
+        return "client-panel";
+    }
+
+    public String deleteSubscription(Subscription subscription) {
+        subscriptionService.deleteSubscription(subscription.getId());
+
+        return "subscription-panel";
     }
 }

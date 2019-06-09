@@ -6,25 +6,19 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Client panel</title>
+        <title>Subscription panel</title>
         <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
     </h:head>
     <h:body>
-        <h3>Navigation</h3>
-        <h:form>
-            <h:commandButton value="Manage subscriptions" action="subscription-panel" />
-            <h:commandButton value="Detailed report" action="detailed-report" />
-            <h:commandButton value="Last month report" action="last-month-report" />
-        </h:form>
+        <h3>Client subscriptions</h3>
         <hr />
-
         <h:form>
-            <ui:repeat var="menuCategory" value="#{MenuManager.allMenuCategories}">
-                <h3>#{menuCategory.name}</h3>
-                <h:dataTable id="menuItemsDT" value="#{MenuManager.getAllMenuCategoryItemsForClient(menuCategory)}" var="menuItem"
+            <ui:repeat var="subscription" value="#{OrdersManager.allClientSubscriptions}">
+                <h4>Subscribed days of the week: #{OrdersManager.getSubscriptionDaysOfTheWeekExplication(subscription.daysOfTheWeek)}</h4>
+                <h:dataTable id="subscriptionDT" value="#{subscription.menuItems}" var="menuItem"
                              styleClass="order-table"
                              headerClass="order-table-header"
-                             rowClasses="order-table-odd-row, order-table-even-row">
+                             rowClasses="order-table-even-row, order-table-odd-row">
                     <h:column>
                         <f:facet name="header">Position number</f:facet>
                         #{menuItem.id}
@@ -41,14 +35,10 @@
                         <f:facet name="header">Price</f:facet>
                         #{menuItem.price}
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">Order</f:facet>
-                        <h:selectBooleanCheckbox value="#{OrdersManager.orderCheckboxes[menuItem.id]}" />
-                    </h:column>
                 </h:dataTable>
+                <h:commandButton value="Delete subscription" action="#{OrdersManager.deleteSubscription(subscription)}" />
+                <br />
             </ui:repeat>
-            <h:commandButton value="Order" action="#{OrdersManager.order}" /><br />
-            <h:commandButton value="Subscribe" action="#{OrdersManager.subscribe}" /><br />
         </h:form>
     </h:body>
 </html>

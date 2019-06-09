@@ -34,8 +34,8 @@
         </h:dataTable><br />
         Amount to pay: <h:outputText value="#{OrdersManager.orderPrice}" /> zł
         <h:form>
-            <h:commandButton value="Confirm" action="#{OrdersManager.confirm}" /><br />
-            <h:commandButton value="Cancel" action="#{OrdersManager.cancel}" />
+            <h:commandButton value="Confirm" action="#{OrdersManager.confirmOrder}" /><br />
+            <h:commandButton value="Cancel" action="#{OrdersManager.cancelOrder}" />
         </h:form>
     </h:body>
 </html>
