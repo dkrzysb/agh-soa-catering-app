@@ -19,6 +19,8 @@ public class OrdersManager {
     private Map<Long, Boolean> orderCheckboxes = new HashMap<Long, Boolean>();
     private List<MenuItem> orderedMenuItems;
     private String[] subscriptionDaysOfTheWeek;
+    private Date fromDate;
+    private Date toDate;
 
     @ManagedProperty(value="#{menuItemService}")
     private MenuItemService menuItemService;
@@ -36,6 +38,10 @@ public class OrdersManager {
     }
 
     public String[] getSubscriptionDaysOfTheWeek() { return subscriptionDaysOfTheWeek; }
+
+    public Date getFromDate() { return fromDate; }
+
+    public Date getToDate() { return toDate; }
 
     public BigDecimal getOrderPrice() {
         BigDecimal orderPrice = new BigDecimal(0);
@@ -64,7 +70,15 @@ public class OrdersManager {
         return orderService.getAllClientOrders(clientId);
     }
 
-    public int getLastMonthNumberOfMeals() {
+    public List<Order> getClientOrdersBetweenDates() {
+        Long clientId = 1l;
+
+        if(fromDate != null && toDate != null)
+            return orderService.getClientOrdersBetweenDates(clientId, fromDate, toDate);
+        return new ArrayList<>();
+    }
+
+    public int getCurrentMonthNumberOfMeals() {
         Long clientId = 1l;
         Date now = new Date();
         Date fromDate = new Date(now.getYear(), now.getMonth(), 1);
@@ -73,7 +87,7 @@ public class OrdersManager {
         return orderService.getClientOrdersBetweenDates(clientId, fromDate, toDate).size();
     }
 
-    public BigDecimal getLastMonthClientOrdersTotalPrice() {
+    public BigDecimal getCurrentMonthClientOrdersTotalPrice() {
         Long clientId = 1l;
         Date now = new Date();
         Date fromDate = new Date(now.getYear(), now.getMonth(), 1);
@@ -117,6 +131,10 @@ public class OrdersManager {
     public void setSubscriptionService(SubscriptionService subscriptionService) { this.subscriptionService = subscriptionService; }
 
     public void setSubscriptionDaysOfTheWeek(String[] subscriptionDaysOfTheWeek) { this.subscriptionDaysOfTheWeek = subscriptionDaysOfTheWeek; }
+
+    public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
+
+    public void setToDate(Date toDate) { this.toDate = toDate; }
 
     public String order() {
         orderedMenuItems = new ArrayList<MenuItem>();
