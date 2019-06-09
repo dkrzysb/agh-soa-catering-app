@@ -8,50 +8,69 @@
     <h:head>
         <title>Manager panel</title>
         <link type="text/css" rel="stylesheet" href="resources/table-style.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
     </h:head>
     <h:body>
-    <h3>Navigation</h3>
         <h:form>
-            <h:commandButton value="Add new menu category" action="#{MenuManager.addMenuCategory}" /><br />
-            <h:commandButton value="Add new menu item" action="#{MenuManager.addMenuItem}" /><br />
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" style="font-size: large" href="#{request.contextPath}/">Catering</a>
+                    <button class="navbar-toggler" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <h:commandButton value="Add new menu category" styleClass="btn btn-outline-secondary btn-sm" action="#{MenuManager.addMenuCategory}" />
+                            <h:commandButton value="Add new menu item" style="margin: 0px 15px" styleClass="btn btn-outline-secondary btn-sm" action="#{MenuManager.addMenuItem}" />
+                            <h:commandButton value="Last month report" styleClass="btn btn-outline-secondary btn-sm" action="last-month-report-manager" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h:form>
-        <hr />
 
-        <h3>Menu</h3>
-        <h:form>
-            <h:selectOneMenu id="menuCategories" value="#{MenuManager.menuCategoryId}">
-                <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
-                <f:ajax render="menuItemsDT" />
-            </h:selectOneMenu><br />
-            <h:commandButton value="Update category" action="#{MenuManager.updateMenuCategory}" /><br />
-            <h:commandButton value="Delete category" action="#{MenuManager.deleteMenuCategory}" />
-            <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
-                         styleClass="order-table"
-                         headerClass="order-table-header"
-                         rowClasses="order-table-odd-row, order-table-even-row">
-                <h:column>
-                    <f:facet name="header">Position number</f:facet>
-                    #{menuItem.id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Name</f:facet>
-                    #{menuItem.name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Serving size</f:facet>
-                    #{menuItem.servingSize}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Price</f:facet>
-                    #{menuItem.price}
-                </h:column>
-                <h:column>
-                    <h:commandButton value="Update" action="#{MenuManager.updateMenuItem(menuItem)}" />
-                </h:column>
-                <h:column>
-                    <h:commandButton value="Delete" action="#{MenuManager.deleteMenuItem(menuItem)}" />
-                </h:column>
-            </h:dataTable>
-        </h:form>
+        <div class="container">
+            <h3>Menu</h3>
+            <h:form>
+                <h:selectOneMenu styleClass="form-control" id="menuCategories" value="#{MenuManager.menuCategoryId}">
+                    <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
+                    <f:ajax render="menuItemsDT" />
+                </h:selectOneMenu>
+                <br/>
+                <h:commandButton value="Update category" styleClass="btn btn-primary" action="#{MenuManager.updateMenuCategory}" />
+                <h:commandButton value="Delete category" styleClass="btn btn-danger"  action="#{MenuManager.deleteMenuCategory}" />
+                <br/>
+                <br/>
+                <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
+                             styleClass="table thead-dark table-striped"
+                             rowClasses="col">
+                    <h:column>
+                        <f:facet name="header">Position number</f:facet>
+                        #{menuItem.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                        #{menuItem.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Serving size</f:facet>
+                        #{menuItem.servingSize}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                        #{menuItem.price}
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Update" styleClass="btn btn-primary" action="#{MenuManager.updateMenuItem(menuItem)}" />
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Delete" styleClass="btn btn-danger" action="#{MenuManager.deleteMenuItem(menuItem)}" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>

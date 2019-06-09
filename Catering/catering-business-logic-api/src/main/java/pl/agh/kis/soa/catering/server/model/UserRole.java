@@ -14,6 +14,12 @@ public class UserRole implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
     private String role;
+
+    public UserRole() {
+    }
+
+    public UserRole(String role) {
+        this.role = role;
+    }
 }

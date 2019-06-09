@@ -1,18 +1,18 @@
 package pl.agh.kis.soa.catering.client.services;
 
 import pl.agh.kis.soa.catering.server.api.IClientRepository;
-import pl.agh.kis.soa.catering.server.model.Client;
-import pl.agh.kis.soa.catering.server.model.Order;
-import pl.agh.kis.soa.catering.server.model.Subscription;
+import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "clientService", eager = true)
-@ApplicationScoped
+@RequestScoped
 public class ClientService {
     @EJB(lookup = "java:global/catering-business-logic/ClientRepository")
     IClientRepository clientRepository;
@@ -27,5 +27,21 @@ public class ClientService {
 
     public List<Subscription> getAllClientSubscriptions(Long clientId) {
         return clientRepository.getAllClientSubscriptions(clientId);
+    }
+
+    public void addClient(Client client){
+        clientRepository.addClient(client);
+    }
+
+    public UserRole getUserRole(String role) {
+        return clientRepository.getUserRole(role);
+    }
+
+    public List<UserAccount> getAllUsers() {
+        return clientRepository.getAllUsers();
+    }
+
+    public void removeUser(UserAccount userAccount) {
+        clientRepository.removeUser(userAccount);
     }
 }
