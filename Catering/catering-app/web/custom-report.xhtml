@@ -23,9 +23,9 @@
                     <div class="navbar-nav">
                         <h:commandButton value="Order" style="margin-right: 15px" styleClass="btn btn-outline-secondary btn-sm" action="client-panel" />
                         <h:commandButton value="Manage subscriptions" style="margin-right: 15px" styleClass="btn btn-outline-secondary btn-sm" action="subscription-panel" />
-                        <h:commandButton value="Detailed report" style="margin-right: 15px" styleClass="btn btn-secondary btn-sm" action="detailed-report" />
+                        <h:commandButton value="Detailed report" style="margin-right: 15px" styleClass="btn btn-outline-secondary btn-sm" action="detailed-report" />
                         <h:commandButton value="Current month report" style="margin-right: 15px" styleClass="btn btn-outline-secondary btn-sm" action="current-month-report-client" />
-                        <h:commandButton value="Custom report" styleClass="btn btn-outline-secondary btn-sm" action="custom-report" />
+                        <h:commandButton value="Custom report" styleClass="btn btn-secondary btn-sm" action="custom-report" />
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             To date: <br />
             <h:inputText value="#{OrdersManager.toDate}">
                 <f:convertDateTime pattern="yyyy-MM-dd"/>
-            </h:inputText><br />
+            </h:inputText><br /><br />
             <h:commandButton value="Get client orders" styleClass="btn btn-primary">
                 <f:ajax execute="@form" render="orders" />
             </h:commandButton>
