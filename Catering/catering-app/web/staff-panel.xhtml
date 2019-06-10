@@ -30,7 +30,8 @@
 
         <div class="container">
             <h3>Unconfirmed orders</h3>
-            <h:panelGroup id="orders">
+            <hr />
+            <h:panelGroup id="unconfirmedOrders">
                 <ui:repeat var="order" value="#{OrdersManager.allUnconfirmedOrders}">
                     <h4>Order date: #{order.date}</h4>
                     <h4>Order client: #{order.client.name} #{order.client.surname}</h4>
@@ -55,11 +56,49 @@
                         </h:column>
                     </h:dataTable>
                     <h:form>
-                        <h:commandButton value="Confirm" styleClass="btn btn-primary" action="#{StaffManager.confirmOrder(order.id)}">
-                            <f:ajax execute="@this" render="orders" />
-                        </h:commandButton><br /><br />
+                        <h:commandButton value="Confirm" style="margin-right: 15px;" styleClass="btn btn-primary" action="#{StaffManager.confirmOrder(order.id)}">
+                            <f:ajax execute="@this" render="unconfirmedOrders confirmedAndNotShippedOrders" />
+                        </h:commandButton>
                         <h:commandButton value="Generate receipt" styleClass="btn btn-primary" action="#{StaffManager.generateReceipt(order.id)}" />
                     </h:form>
+                    <hr />
+                </ui:repeat>
+            </h:panelGroup>
+            <br />
+            <br />
+            <hr />
+            <h3>Confirmed and not shipped orders</h3>
+            <hr />
+            <h:panelGroup id="confirmedAndNotShippedOrders">
+                <ui:repeat var="order" value="#{OrdersManager.allConfirmedAndNotShipPendingOrders}">
+                    <h4>Order date: #{order.date}</h4>
+                    <h4>Order client: #{order.client.name} #{order.client.surname}</h4>
+                    <h:dataTable value="#{order.menuItems}" var="menuItem"
+                                 styleClass="table thead-dark table-striped"
+                                 rowClasses="col">
+                        <h:column>
+                            <f:facet name="header">Position number</f:facet>
+                            #{menuItem.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            #{menuItem.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Serving size</f:facet>
+                            #{menuItem.servingSize}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            #{menuItem.price}
+                        </h:column>
+                    </h:dataTable>
+                    <h:form>
+                        <h:commandButton value="Order shipping" styleClass="btn btn-primary" action="#{StaffManager.orderShipping(order.id)}">
+                            <f:ajax execute="@this" render="confirmedAndNotShippedOrders" />
+                        </h:commandButton><br />
+                    </h:form>
+                    <hr />
                 </ui:repeat>
             </h:panelGroup>
         </div>
