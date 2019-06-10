@@ -24,5 +24,6 @@ public class Order implements Serializable {
     private Date date;
     private BigDecimal price;
     private Boolean confirmed;
+    private Boolean shipPending;
     private Boolean shipped;
 }
