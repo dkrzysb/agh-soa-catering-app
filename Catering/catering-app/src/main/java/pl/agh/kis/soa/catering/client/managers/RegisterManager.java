@@ -51,7 +51,7 @@ public class RegisterManager {
         byte[] passwordBytes = password.getBytes();
         byte[] hash = md.digest(passwordBytes);
         String base64String = Base64.encodeBase64String(hash);
-        System.out.println("skrót hasła: " + base64String);
+//        System.out.println("skrót hasła: " + base64String);
 
         userAccountL.setPassword(base64String);
         UserRole userRole = clientService.getUserRole("Manager");

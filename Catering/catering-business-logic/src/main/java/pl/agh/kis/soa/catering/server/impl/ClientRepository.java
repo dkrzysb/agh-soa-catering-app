@@ -5,11 +5,13 @@ import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.xml.registry.infomodel.User;
+import java.security.Principal;
 import java.util.List;
 
 @Remote(IClientRepository.class)
@@ -85,6 +87,30 @@ public class ClientRepository implements IClientRepository {
             em.remove(userAccount1);
             em.getTransaction().commit();
         }
+    }
+
+    @Override
+    public boolean checkUserPassword(String login, String hashedOldPassword) {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<UserAccount> query = em.createQuery("select userAccount from UserAccount userAccount where userAccount.username = :username and userAccount.password = :password", UserAccount.class).setParameter("username", login).setParameter("password", hashedOldPassword);;
+        try {
+            UserAccount userAccount = query.getSingleResult();
+            return true;
+
+        }
+        catch (NoResultException e){
+            return false;
+        }
+    }
+
+    @Override
+    public void changeUserPassword(String login, String hashPassword) {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<UserAccount> query = em.createQuery("select userAccount from UserAccount userAccount where userAccount.username = :username", UserAccount.class).setParameter("username", login);
+        UserAccount userAccount = query.getSingleResult();
+        em.getTransaction().begin();
+        userAccount.setPassword(hashPassword);
+        em.getTransaction().commit();
     }
 
 }

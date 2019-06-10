@@ -27,8 +27,8 @@
                             <a class="nav-item nav-link" href="#{request.contextPath}/admin-panel.xhtml">Admin Panel</a>
                             <a class="nav-item nav-link" href="#{request.contextPath}/staff-panel.xhtml">Staff Panel</a>
                         </div>
-                        <div class="justify-content-right float-right" >
-                            <a class="nav-item" style="margin-right: 20px">Cześć, #{request.remoteUser}!</a>
+                        <div >
+                            <a class="nav-item" href="#{request.contextPath}/user-panel.xhtml" style="margin-right: 20px; color:rgba(0,0,0,0.5) !important; text-decoration:none;">Cześć, #{request.remoteUser}!</a>
                             <h:commandButton styleClass="btn btn-outline-secondary" value="Logout" action="#{AuthBean.logout}" />
                         </div>
                     </div>

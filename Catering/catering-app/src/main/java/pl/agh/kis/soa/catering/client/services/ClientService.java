@@ -5,7 +5,6 @@ import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.EJB;
 import javax.faces.bean.*;
-import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "clientService", eager = true)
@@ -42,5 +41,13 @@ public class ClientService {
 
     public void removeUser(UserAccount userAccount) {
         clientRepository.removeUser(userAccount);
+    }
+
+    public boolean checkUserPassword(String login, String hashedOldPassword) {
+        return clientRepository.checkUserPassword(login, hashedOldPassword);
+    }
+
+    public void changeUserPassword(String login, String hashPassword) {
+        clientRepository.changeUserPassword(login, hashPassword);
     }
 }

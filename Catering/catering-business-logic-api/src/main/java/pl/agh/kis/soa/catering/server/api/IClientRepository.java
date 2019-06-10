@@ -14,4 +14,6 @@ public interface IClientRepository {
     UserRole getUserRole(String role);
     List<UserAccount> getAllUsers();
     void removeUser(UserAccount userAccount);
+    boolean checkUserPassword(String login, String hashedOldPassword);
+    void changeUserPassword(String login, String hashPassword);
 }
