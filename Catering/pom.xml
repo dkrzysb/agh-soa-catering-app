@@ -16,6 +16,7 @@
         <module>catering-rest-client</module>
         <module>catering-business-logic-soap</module>
         <module>catering-soap-client</module>
+        <module>meal-supplier</module>
     </modules>
 
     <dependencies>

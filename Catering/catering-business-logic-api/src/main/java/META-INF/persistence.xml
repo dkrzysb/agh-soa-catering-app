@@ -11,6 +11,7 @@
         <class>pl.agh.kis.soa.catering.server.model.Subscription</class>
         <class>pl.agh.kis.soa.catering.server.model.UserAccount</class>
         <class>pl.agh.kis.soa.catering.server.model.UserRole</class>
+        <class>pl.agh.kis.soa.catering.server.model.ShippingOrder</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
             <property name="hibernate.hbm2ddl.auto" value="create-drop" />
