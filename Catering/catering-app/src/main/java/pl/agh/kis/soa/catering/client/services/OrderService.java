@@ -33,9 +33,13 @@ public class OrderService {
         return orderRepository.getAllUnconfirmedOrders();
     }
 
+    public List<Order> getAllConfirmedAndNotShipPendingOrders() { return orderRepository.getAllConfirmedAndNotShipPendingOrders(); }
+
     public void confirmOrder(Long orderId) {
         orderRepository.confirmOrder(orderId);
     }
+
+    public void enqueueOrderShipping(Long orderId) { orderRepository.enqueueOrderShipping(orderId); }
 
     public Order getOrderById(Long orderId) {
         return orderRepository.getOrderById(orderId);

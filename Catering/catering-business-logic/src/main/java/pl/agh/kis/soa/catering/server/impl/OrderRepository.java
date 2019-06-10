@@ -32,6 +32,7 @@ public class OrderRepository implements IOrderRepository {
         order.setDate(date);
         order.setPrice(price);
         order.setConfirmed(false);
+        order.setShipPending(false);
         order.setShipped(false);
         client.getOrders().add(order);
 
@@ -68,12 +69,37 @@ public class OrderRepository implements IOrderRepository {
         return query.getResultList();
     }
 
+    public List<Order> getAllConfirmedAndNotShipPendingOrders() {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<Order> query = em.createQuery("select order from Order order where order.confirmed = true and order.shipPending = false", Order.class);
+
+        return query.getResultList();
+    }
+
     public void confirmOrder(Long orderId) {
         EntityManager em = factory.createEntityManager();
         Order order = em.find(Order.class, orderId);
 
         em.getTransaction().begin();
         order.setConfirmed(true);
+        em.getTransaction().commit();
+    }
+
+    public void enqueueOrderShipping(Long orderId) {
+        EntityManager em = factory.createEntityManager();
+        Order order = em.find(Order.class, orderId);
+
+        em.getTransaction().begin();
+        order.setShipPending(true);
+        em.getTransaction().commit();
+    }
+
+    public void shipOrder(Long orderId) {
+        EntityManager em = factory.createEntityManager();
+        Order order = em.find(Order.class, orderId);
+
+        em.getTransaction().begin();
+        order.setShipped(true);
         em.getTransaction().commit();
     }
 

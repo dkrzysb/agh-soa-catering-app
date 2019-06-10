@@ -12,6 +12,9 @@ public interface IOrderRepository {
     List<Order> getAllClientOrders(Long clientId);
     List<Order> getClientOrdersBetweenDates(Long clientId, Date fromDate, Date toDate);
     List<Order> getAllUnconfirmedOrders();
+    List<Order> getAllConfirmedAndNotShipPendingOrders();
     void confirmOrder(Long orderId);
+    void enqueueOrderShipping(Long orderId);
+    void shipOrder(Long orderId);
     Order getOrderById(Long orderId);
 }

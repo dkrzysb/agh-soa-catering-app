@@ -79,6 +79,10 @@ public class OrdersManager {
         return orderService.getAllUnconfirmedOrders();
     }
 
+    public List<Order> getAllConfirmedAndNotShipPendingOrders() {
+        return orderService.getAllConfirmedAndNotShipPendingOrders();
+    }
+
     public List<Order> getClientOrdersBetweenDates() {
         Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
 
