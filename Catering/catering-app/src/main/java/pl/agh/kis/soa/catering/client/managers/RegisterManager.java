@@ -54,7 +54,7 @@ public class RegisterManager {
 //        System.out.println("skrót hasła: " + base64String);
 
         userAccountL.setPassword(base64String);
-        UserRole userRole = clientService.getUserRole("Manager");
+        UserRole userRole = clientService.getUserRole("Client");
         userAccountL.setUserRole(userRole);
         client.setUserAccount(userAccountL);
         clientService.addClient(client);
