@@ -90,4 +90,16 @@
     <security-role>
         <role-name>Admin</role-name>
     </security-role>
+
+    <filter>
+        <filter-name>BrowserFilter</filter-name> <!-- mandatory -->
+        <filter-class>pl.agh.kis.soa.catering.client.authentification.BrowserFilter</filter-class> <!-- mandatory -->
+
+    </filter>
+
+    <filter-mapping>
+        <filter-name>BrowserFilter</filter-name> <!-- mandatory -->
+        <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
+    </filter-mapping>
+
 </web-app>
