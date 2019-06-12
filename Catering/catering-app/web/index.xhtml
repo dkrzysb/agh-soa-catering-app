@@ -63,7 +63,32 @@
                     #{menuItem.price}
                 </h:column>
             </h:dataTable>
-        </h:form>
+        </h:form><br />
+        <hr />
+
+        <h3>Offers of the day</h3>
+            <h:form>
+                <h:dataTable id="offersOfTheDayDT" value="#{OfferOfTheDayManager.allOffersOfTheDay}" var="offerOfTheDay"
+                             styleClass="table thead-dark table-striped"
+                             rowClasses="col">
+                    <h:column>
+                        <f:facet name="header">Position number</f:facet>
+                        #{offerOfTheDay.menuItem.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                        #{offerOfTheDay.menuItem.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Serving size</f:facet>
+                        #{offerOfTheDay.menuItem.servingSize}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                        #{offerOfTheDay.price}
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </div>
     </h:body>
 </html>
