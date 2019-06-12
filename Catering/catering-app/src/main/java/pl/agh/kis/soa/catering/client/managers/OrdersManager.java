@@ -24,6 +24,9 @@ public class OrdersManager {
     private String[] subscriptionDaysOfTheWeek;
     private Date fromDate;
     private Date toDate;
+    private String street;
+    private String city;
+    private String postalCode;
 
     @ManagedProperty(value="#{menuItemService}")
     private MenuItemService menuItemService;
@@ -47,6 +50,29 @@ public class OrdersManager {
     public Date getFromDate() { return fromDate; }
 
     public Date getToDate() { return toDate; }
+
+    public String getStreet(){
+        return this.street;
+    }
+
+    public String getCity(){
+        return this.city;
+    }
+
+    public String getPostalCode(){
+        return this.postalCode;
+    }
+    public void setStreet(String street){
+         this.street = street;
+    }
+
+    public void setCity(String city){
+        this.city = city;
+    }
+
+    public void setPostalCode(String postalCode){
+        this.postalCode = postalCode;
+    }
 
     public BigDecimal getOrderPrice() {
         BigDecimal orderPrice = new BigDecimal(0);
@@ -173,7 +199,8 @@ public class OrdersManager {
     public String confirmOrder() {
         Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
 
-        orderService.addOrder(client.getId(), orderedMenuItems, new Date(), getOrderPrice());
+        Order order = new Order(orderedMenuItems, new Date(), getOrderPrice(), getStreet(), getCity(), getPostalCode());
+        orderService.addOrder(client.getId(), order);
         orderedMenuItems = new ArrayList<MenuItem>();
 
         return "client-panel";

@@ -13,7 +13,7 @@ public class DbInitializer {
     public static DbInitializer getInstance() {
         if(_instance == null) {
             _instance = new DbInitializer();
-          ///  _instance.seed();
+            _instance.seed();
         }
 
         return _instance;

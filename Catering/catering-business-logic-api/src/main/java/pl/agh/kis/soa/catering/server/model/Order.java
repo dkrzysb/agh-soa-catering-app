@@ -26,4 +26,18 @@ public class Order implements Serializable {
     private Boolean confirmed;
     private Boolean shipPending;
     private Boolean shipped;
+    private String street;
+    private String city;
+    private String postalCode;
+
+    public Order(List<MenuItem> orderedMenuItems, Date date, BigDecimal orderPrice, String street, String city, String postalCode) {
+        this.menuItems = orderedMenuItems;
+        this.date = date;
+        this.price = orderPrice;
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+    }
+
+    public Order(){}
 }

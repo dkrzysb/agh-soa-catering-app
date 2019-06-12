@@ -21,8 +21,8 @@ public class OrderService {
         return orderRepository.getAllOrders();
     }
 
-    public void addOrder(Long clientId, List<MenuItem> menuItems, Date date, BigDecimal price) {
-        orderRepository.addOrder(clientId, menuItems, date, price);
+    public void addOrder(Long clientId, Order order) {
+        orderRepository.addOrder(clientId, order);
     }
 
     public List<Order> getAllClientOrders(Long clientId) {

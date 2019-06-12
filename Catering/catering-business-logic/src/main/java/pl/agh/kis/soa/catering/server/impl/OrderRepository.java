@@ -21,14 +21,10 @@ import java.util.List;
 public class OrderRepository implements IOrderRepository {
     private EntityManagerFactory factory = DbInitializer.getInstance().getEntityManagerFactory();
 
-    public void addOrder(Long clientId, List<MenuItem> menuItems, Date date, BigDecimal price) {
+    public void addOrder(Long clientId, Order order) {
         EntityManager em = factory.createEntityManager();
-        Order order = new Order();
         Client client = em.find(Client.class, clientId);
         order.setClient(client);
-        order.setMenuItems(menuItems);
-        order.setDate(date);
-        order.setPrice(price);
         order.setConfirmed(false);
         order.setShipPending(false);
         order.setShipped(false);
