@@ -17,4 +17,6 @@ public interface IOrderRepository {
     void enqueueOrderShipping(Long orderId);
     void shipOrder(Long orderId);
     Order getOrderById(Long orderId);
+
+    void deleteOrder(Long id);
 }

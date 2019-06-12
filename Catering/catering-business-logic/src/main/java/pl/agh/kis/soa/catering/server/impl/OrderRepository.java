@@ -1,10 +1,7 @@
 package pl.agh.kis.soa.catering.server.impl;
 
 import pl.agh.kis.soa.catering.server.api.IOrderRepository;
-import pl.agh.kis.soa.catering.server.model.Client;
-import pl.agh.kis.soa.catering.server.model.DbInitializer;
-import pl.agh.kis.soa.catering.server.model.MenuItem;
-import pl.agh.kis.soa.catering.server.model.Order;
+import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -108,5 +105,14 @@ public class OrderRepository implements IOrderRepository {
         Order order = em.find(Order.class, orderId);
 
         return order;
+    }
+
+    @Override
+    public void deleteOrder(Long id) {
+        EntityManager em = factory.createEntityManager();
+        Order order = em.find(Order.class, id);
+        em.getTransaction().begin();
+        em.remove(order);
+        em.getTransaction().commit();
     }
 }

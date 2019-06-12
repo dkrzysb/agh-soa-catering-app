@@ -44,4 +44,6 @@ public class OrderService {
     public Order getOrderById(Long orderId) {
         return orderRepository.getOrderById(orderId);
     }
+
+    public void deleteOrder(Long id) { orderRepository.deleteOrder(id);}
 }

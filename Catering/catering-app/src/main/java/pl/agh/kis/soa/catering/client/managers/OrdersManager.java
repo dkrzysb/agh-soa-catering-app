@@ -206,4 +206,21 @@ public class OrdersManager {
 
         return "subscription-panel";
     }
+
+    public String getStatus(Order order) {
+        if (order.getConfirmed()){
+            return "Zamówienie potwierdzone";
+        }
+        if (order.getShipPending()){
+            return "Zamówienie gotowe";
+        }
+        if (order.getShipped()) {
+            return "Zamówienie dostarczone";
+        }
+        return "Zamowienie złożone";
+    }
+
+    public void deleteOrder(Order order) {
+        orderService.deleteOrder(order.getId());
+    }
 }
