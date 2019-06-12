@@ -12,4 +12,5 @@ public interface IMenuItemRepository {
     void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId);
     void updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId);
     void deleteMenuItem(Long id);
+    List<MenuItem> topMeals();
 }

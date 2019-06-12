@@ -36,4 +36,8 @@ public class MenuItemService {
     public void deleteMenuItem(Long id) {
         menuItemRepository.deleteMenuItem(id);
     }
+
+    public List<MenuItem> topMeals() {
+        return menuItemRepository.topMeals();
+    }
 }

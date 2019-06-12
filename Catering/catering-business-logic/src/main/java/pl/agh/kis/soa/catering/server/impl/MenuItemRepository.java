@@ -4,12 +4,17 @@ import pl.agh.kis.soa.catering.server.api.IMenuItemRepository;
 import pl.agh.kis.soa.catering.server.model.DbInitializer;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
+import pl.agh.kis.soa.catering.server.model.Order;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -79,6 +84,15 @@ public class MenuItemRepository implements IMenuItemRepository {
         em.remove(menuItem);
         menuCategory.getItems().remove(menuItem);
         em.getTransaction().commit();
+    }
+
+    @Override
+    public List<MenuItem> topMeals() {
+        EntityManager em = factory.createEntityManager();
+        Query query = em.createQuery("select order.menuItems from Order order");
+
+
+        return query.getResultList();
     }
 
     private boolean sameMenuItemExistsInMenuCategory(EntityManager em, String name, int servingSize, Long menuCategoryId) {
