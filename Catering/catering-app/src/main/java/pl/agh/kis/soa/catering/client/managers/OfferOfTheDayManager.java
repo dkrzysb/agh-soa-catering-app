@@ -2,42 +2,43 @@ package pl.agh.kis.soa.catering.client.managers;
 
 import pl.agh.kis.soa.catering.client.services.MenuCategoryService;
 import pl.agh.kis.soa.catering.client.services.MenuItemService;
+import pl.agh.kis.soa.catering.client.services.OfferOfTheDayService;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
+import pl.agh.kis.soa.catering.server.model.OfferOfTheDay;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "OfferOfTheDayManager")
 @SessionScoped
 public class OfferOfTheDayManager {
-    private Long[] selectedOffersOfTheDay;
+    private Long selectedOfferOfTheDay;
     private int discount;
 
     @ManagedProperty(value="#{menuItemService}")
     private MenuItemService menuItemService;
     @ManagedProperty(value="#{menuCategoryService}")
     private MenuCategoryService menuCategoryService;
+    @ManagedProperty(value="#{offerOfTheDayService}")
+    private OfferOfTheDayService offerOfTheDayService;
 
     public void setMenuItemService(MenuItemService menuItemService) { this.menuItemService = menuItemService; }
 
     public void setMenuCategoryService(MenuCategoryService menuCategoryService) { this.menuCategoryService = menuCategoryService; }
 
-    public Long[] getSelectedOffersOfTheDay() {
-        return selectedOffersOfTheDay;
-    }
-    public void setSelectedOffersOfTheDay(Long[] selectedOffersOfTheDay) {
-        this.selectedOffersOfTheDay = selectedOffersOfTheDay;
+    public void setOfferOfTheDayService(OfferOfTheDayService offerOfTheDayService) { this.offerOfTheDayService = offerOfTheDayService; }
+
+    public Long getSelectedOfferOfTheDay() {
+        return selectedOfferOfTheDay;
     }
 
     public int getDiscount() {
         return discount;
-    }
-    public void setDiscount(int discount) {
-        this.discount = discount;
     }
 
     public List<MenuItem> getAllMenuItems() {
@@ -50,7 +51,28 @@ public class OfferOfTheDayManager {
         return allMenuItems;
     }
 
-    public String setDiscount() {
+    public List<OfferOfTheDay> getAllOffersOfTheDay() {
+        return offerOfTheDayService.getAllOffersOfTheDay();
+    }
+
+    public void setSelectedOfferOfTheDay(Long selectedOfferOfTheDay) {
+        this.selectedOfferOfTheDay = selectedOfferOfTheDay;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public String setOfferOfTheDay() {
+        MenuItem menuItem = menuItemService.getMenuItemById(selectedOfferOfTheDay);
+
+        offerOfTheDayService.addOfferOfTheDay(selectedOfferOfTheDay, new BigDecimal(menuItem.getPrice().doubleValue() * discount / 100.0));
+
+        return "manager-panel";
+    }
+
+    public String deleteOfferOfTheDay(Long menuItemId) {
+        offerOfTheDayService.deleteOfferOfTheDay(menuItemId);
 
         return "manager-panel";
     }
