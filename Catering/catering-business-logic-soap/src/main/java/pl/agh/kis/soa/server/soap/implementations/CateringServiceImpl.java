@@ -16,6 +16,6 @@ public class CateringServiceImpl implements CateringService {
 
     @WebMethod
     public void addMenuItemToCategory(String name, int servingSize, BigDecimal price, Long menuCategoryId) {
-        menuItemRepository.addMenuItem(name, servingSize, price, menuCategoryId);
+        menuItemRepository.addMenuItem(name, servingSize, price, menuCategoryId, false);
     }
 }

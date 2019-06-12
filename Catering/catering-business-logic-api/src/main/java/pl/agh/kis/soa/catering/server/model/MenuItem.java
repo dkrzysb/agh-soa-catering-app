@@ -22,6 +22,7 @@ public class MenuItem implements Serializable {
     private BigDecimal price;
     @ManyToOne
     private MenuCategory menuCategory;
+    private boolean accepted;
 
     public MenuItem() {}
 

@@ -45,10 +45,12 @@ public class MenuManager {
         return menuCategoryService.getAllMenuCategories();
     }
 
+    public List<MenuItem> getAllAcceptedMenuCategoryItems() { return menuItemService.getAllAcceptedMenuCategoryItems(menuCategoryId); }
+
     public List<MenuItem> getAllMenuCategoryItems() { return menuItemService.getAllMenuCategoryItems(menuCategoryId); }
 
     public List<MenuItem> getAllMenuCategoryItemsForClient(MenuCategory menuCategory) {
-        return menuItemService.getAllMenuCategoryItems(menuCategory.getId());
+        return menuItemService.getAllAcceptedMenuCategoryItems(menuCategory.getId());
     }
 
     public String addMenuCategory() {
@@ -147,6 +149,9 @@ public class MenuManager {
         fc.responseComplete(); // Important! Otherwise JSF will attempt to render the response which obviously will fail since it's already written with a file and closed.
     }
 
+    public void acceptItem(MenuItem menuItem) {
+        menuItemService.acceptItem(menuItem.getId());
+    }
 }
 
 enum OperationType {

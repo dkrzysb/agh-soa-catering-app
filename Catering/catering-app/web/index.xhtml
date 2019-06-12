@@ -69,7 +69,7 @@
                 <f:selectItems value="#{MenuManager.allMenuCategories}" var="menuCategory" itemValue="#{menuCategory.id}" itemLabel="#{menuCategory.name}" />
                 <f:ajax render="menuItemsDT" />
             </h:selectOneMenu><br />
-            <h:dataTable id="menuItemsDT" value="#{MenuManager.allMenuCategoryItems}" var="menuItem"
+            <h:dataTable id="menuItemsDT" value="#{MenuManager.allAcceptedMenuCategoryItems}" var="menuItem"
                          styleClass="table thead-dark table-striped"
                          rowClasses="col">
                 <h:column>

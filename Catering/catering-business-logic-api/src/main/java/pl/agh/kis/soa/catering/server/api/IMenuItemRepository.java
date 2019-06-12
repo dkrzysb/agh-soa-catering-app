@@ -9,8 +9,12 @@ public interface IMenuItemRepository {
     MenuItem getMenuItemById(Long id);
     List<MenuItem> getAllMenuItems();
     List<MenuItem> getAllMenuCategoryItems(Long menuCategoryId);
-    void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId);
+    void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId, boolean accepted);
     void updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId);
     void deleteMenuItem(Long id);
     List<MenuItem> topMeals();
+
+    List<MenuItem> getAllAcceptedMenuCategoryItems(Long menuCategoryId);
+
+    void acceptItem(Long menuItemId);
 }
