@@ -1,0 +1,3 @@
+<jboss-web>
+    <security-domain>postgresqldomain</security-domain>
+</jboss-web>
