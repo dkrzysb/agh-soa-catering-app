@@ -52,11 +52,6 @@
                         <f:ajax render="formula"/>
                     </h:commandButton>
                 </h:column>
-                <h:column>
-                    <h:commandButton value="Delete User" action="#{AdminManager.deleteUser(user)}" >
-                        <f:ajax render="formula"/>
-                    </h:commandButton>
-                </h:column>
             </h:dataTable>
             <h:panelGroup layout="block"  rendered="#{AdminManager.showPopup}">
                 <div class="modal fade show" id="exampleModal" style="display: block; padding-right: 15px;">
@@ -70,6 +65,8 @@
                                     <label for="newPassword">New Password</label>
                                     <h:inputSecret id="newPassword" class="form-control" value="#{AdminManager.password}" required="true" label="Password" />
                                 </div>
+                                <h:messages style = "color:red;margin:8px;" />
+
 
                             </div>
                             <div class="modal-footer">
@@ -86,7 +83,7 @@
                 </div>
 
             </h:panelGroup>
-            <h3>Users</h3>
+            <h3>Orders</h3>
             <hr/>
             <ui:repeat id="orders" var="order" value="#{OrdersManager.allOrders}">
                 <h5>Order date: #{order.date}
