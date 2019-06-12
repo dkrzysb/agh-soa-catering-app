@@ -27,4 +27,9 @@ public class RoleBean {
         return (origRequest.isUserInRole("Staff") || origRequest.isUserInRole("Admin"));
     }
 
+    public boolean isUserClient() {
+        HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        return (origRequest.isUserInRole("Client"));
+    }
+
 }

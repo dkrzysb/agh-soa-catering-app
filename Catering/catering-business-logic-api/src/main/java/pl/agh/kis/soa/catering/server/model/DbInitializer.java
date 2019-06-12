@@ -1,8 +1,12 @@
 package pl.agh.kis.soa.catering.server.model;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class DbInitializer {
     private static DbInitializer _instance = null;
@@ -13,7 +17,7 @@ public class DbInitializer {
     public static DbInitializer getInstance() {
         if(_instance == null) {
             _instance = new DbInitializer();
-          ///  _instance.seed();
+            _instance.seed();
         }
 
         return _instance;
@@ -24,8 +28,8 @@ public class DbInitializer {
     private void seed() {
         EntityManager em = factory.createEntityManager();
 
-        seedMenuCategoryTable(em);
-        seedClientTable(em);
+        //seedMenuCategoryTable(em);
+        //seedClientTable(em);
         seedUserAccountAndRoleTables(em);
     }
 
@@ -79,12 +83,30 @@ public class DbInitializer {
     private void seedUserAccountAndRoleTables(EntityManager em) {
         UserAccount admin = new UserAccount();
         admin.setUsername("admin");
-        admin.setPassword("admin");
-        UserRole userRole = new UserRole("Admin");
-        admin.setUserRole(userRole);
+        admin.setPassword("0DPiKuNIrrVmD8IUCuw1hQxNqZc=");
+        UserRole adminRole = new UserRole("Admin");
+        admin.setUserRole(adminRole);
+
+        UserAccount manager = new UserAccount();
+        manager.setUsername("manager");
+        manager.setPassword("GoVlqdxyBIugO0FWvj5WnyJ3HyM=");
+        UserRole managerRole = new UserRole("Manager");
+        manager.setUserRole(managerRole);
+
+        UserAccount staff = new UserAccount();
+        staff.setUsername("staff");
+        staff.setPassword("bMtLfDmm53927PqTWoVcbEatVhE=");
+        UserRole staffRole = new UserRole("Staff");
+        staff.setUserRole(staffRole);
+
         em.getTransaction().begin();
-        em.persist(userRole);
+        em.persist(adminRole);
+        em.persist(managerRole);
+        em.persist(staffRole);
         em.persist(admin);
+        em.persist(manager);
+        em.persist(staff);
         em.getTransaction().commit();
     }
+
 }

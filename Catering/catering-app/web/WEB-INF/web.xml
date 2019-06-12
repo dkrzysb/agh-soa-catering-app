@@ -37,6 +37,7 @@
             <role-name>Client</role-name>
             <role-name>Manager</role-name>
             <role-name>Admin</role-name>
+            <role-name>Staff</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -58,6 +59,19 @@
         <web-resource-collection>
             <web-resource-name>HtmlAuth</web-resource-name>
             <description>application security constraints</description>
+            <url-pattern>/client-panel.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Client</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HtmlAuth</web-resource-name>
+            <description>application security constraints</description>
             <url-pattern>/admin-panel.xhtml</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -67,7 +81,20 @@
         </auth-constraint>
     </security-constraint>
 
-
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HtmlAuth</web-resource-name>
+            <description>application security constraints</description>
+            <url-pattern>/staff-panel.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Manager</role-name>
+            <role-name>Admin</role-name>
+            <role-name>Staff</role-name>
+        </auth-constraint>
+    </security-constraint>
 
     <login-config>
         <auth-method>FORM</auth-method>
