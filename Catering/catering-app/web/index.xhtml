@@ -22,10 +22,10 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav mr-auto">
-                            <h:link rendered="#{RoleBean.userManager}" class="nav-item nav-link" href="#{request.contextPath}/manager-panel.xhtml">Manager Panel<span class="sr-only">(current)</span></h:link>
-                            <a class="nav-item nav-link" href="#{request.contextPath}/client-panel.xhtml">Client Panel</a>
-                            <h:link rendered="#{RoleBean.userAdmin}" class="nav-item nav-link" href="#{request.contextPath}/admin-panel.xhtml">Admin Panel</h:link>
-                            <h:link rendered="#{RoleBean.userStaff}" class="nav-item nav-link" href="#{request.contextPath}/staff-panel.xhtml">Staff Panel</h:link>
+                            <h:outputLink rendered="#{RoleBean.userManager}" class="nav-item nav-link" value="#{request.contextPath}/manager-panel.xhtml">Manager Panel<span class="sr-only">(current)</span></h:outputLink>
+                            <h:outputLink rendered="#{RoleBean.userClient}" class="nav-item nav-link" value="#{request.contextPath}/client-panel.xhtml">Client Panel</h:outputLink>
+                            <h:outputLink rendered="#{RoleBean.userAdmin}" class="nav-item nav-link" value="#{request.contextPath}/admin-panel.xhtml">Admin Panel</h:outputLink>
+                            <h:outputLink rendered="#{RoleBean.userStaff}" class="nav-item nav-link" value="#{request.contextPath}/staff-panel.xhtml">Staff Panel</h:outputLink>
                         </div>
                         <div >
                             <a class="nav-item" href="#{request.contextPath}/user-panel.xhtml" style="margin-right: 20px; color:rgba(0,0,0,0.5) !important; text-decoration:none;">Cześć, #{request.remoteUser}!</a>
