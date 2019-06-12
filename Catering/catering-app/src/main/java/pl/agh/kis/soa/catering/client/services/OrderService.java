@@ -17,6 +17,10 @@ public class OrderService {
     @EJB(lookup = "java:global/catering-business-logic/OrderRepository")
     IOrderRepository orderRepository;
 
+    public List<Order> getAllOrders() {
+        return orderRepository.getAllOrders();
+    }
+
     public void addOrder(Long clientId, List<MenuItem> menuItems, Date date, BigDecimal price) {
         orderRepository.addOrder(clientId, menuItems, date, price);
     }

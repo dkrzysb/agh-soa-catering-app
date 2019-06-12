@@ -223,4 +223,8 @@ public class OrdersManager {
     public void deleteOrder(Order order) {
         orderService.deleteOrder(order.getId());
     }
+
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
 }

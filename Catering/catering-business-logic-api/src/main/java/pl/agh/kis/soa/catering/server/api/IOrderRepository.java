@@ -19,4 +19,6 @@ public interface IOrderRepository {
     Order getOrderById(Long orderId);
 
     void deleteOrder(Long id);
+
+    List<Order> getAllOrders();
 }
