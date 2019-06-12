@@ -24,4 +24,11 @@ public class MenuItem implements Serializable {
     private MenuCategory menuCategory;
 
     public MenuItem() {}
+
+    @Override
+    public String toString() {
+        return  name + ',' +
+                servingSize + ',' +
+                price;
+    }
 }
