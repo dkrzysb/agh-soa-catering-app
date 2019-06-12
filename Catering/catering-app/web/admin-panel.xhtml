@@ -68,12 +68,9 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="newPassword">New Password</label>
-                                    <h:inputText id="newPassword" class="form-control" value="#{AdminManager.password}" required="true" label="Password" />
+                                    <h:inputText id="newPassword" type="password" class="form-control" value="#{AdminManager.password}" required="true" label="Password" />
                                 </div>
-                                <div class="form-group">
-                                    <label for="newPassword1">Repeat New Password</label>
-                                    <h:inputText id="newPassword1" class="form-control" value="#{AdminManager.password}" required="true" label="Password" />
-                                </div>
+
                             </div>
                             <div class="modal-footer">
                                 <h:commandButton styleClass="btn btn-secondary" value="Close" action="#{AdminManager.hideUpdatePassword()}">
