@@ -275,15 +275,15 @@ public class OrdersManager {
 
     public String getStatus(Order order) {
         if (order.getConfirmed()){
-            return "Zamówienie potwierdzone";
+            return "Order confirmed";
         }
         if (order.getShipPending()){
-            return "Zamówienie gotowe";
+            return "Order waiting for shipping";
         }
         if (order.getShipped()) {
-            return "Zamówienie dostarczone";
+            return "Order shipped";
         }
-        return "Zamowienie złożone";
+        return "Order placed";
     }
 
     public void deleteOrder(Order order) {

@@ -35,35 +35,37 @@
         <div class="container">
             <h3>Detailed report</h3>
             <hr />
-            <ui:repeat id="orders" var="order" value="#{OrdersManager.allClientOrders}">
-                <h4>Order date: #{order.date}
-                    #{OrdersManager.getStatus(order)}
-                    <h:commandButton rendered="#{!order.confirmed}" value="Cancel" styleClass="btn btn-danger btn-sm" action="#{OrdersManager.deleteOrder(order)}" >
-                        <f:ajax render="orders" />
-                    </h:commandButton>
-                </h4>
+            <h:panelGroup id="orders">
+                <ui:repeat var="order" value="#{OrdersManager.allClientOrders}">
+                    <h4>Order date: #{order.date}
+                        #{OrdersManager.getStatus(order)}
+                        <h:commandButton rendered="#{!order.confirmed}" value="Cancel" styleClass="btn btn-danger btn-sm" action="#{OrdersManager.deleteOrder(order)}" >
+                            <f:ajax render="orders" />
+                        </h:commandButton>
+                    </h4>
 
-                <h:dataTable value="#{order.menuItems}" var="menuItem"
-                             styleClass="table thead-dark table-striped"
-                             rowClasses="col">
-                    <h:column>
-                        <f:facet name="header">Position number</f:facet>
-                        #{menuItem.id}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Name</f:facet>
-                        #{menuItem.name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Serving size</f:facet>
-                        #{menuItem.servingSize}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Price</f:facet>
-                        #{menuItem.price}
-                    </h:column>
-                </h:dataTable><br />
-            </ui:repeat>
+                    <h:dataTable value="#{order.menuItems}" var="menuItem"
+                                 styleClass="table thead-dark table-striped"
+                                 rowClasses="col">
+                        <h:column>
+                            <f:facet name="header">Position number</f:facet>
+                            #{menuItem.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            #{menuItem.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Serving size</f:facet>
+                            #{menuItem.servingSize}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            #{menuItem.price}
+                        </h:column>
+                    </h:dataTable><br />
+                </ui:repeat>
+            </h:panelGroup>
             <br/>
             <br/>
             <br/>

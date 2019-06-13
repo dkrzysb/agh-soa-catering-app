@@ -49,7 +49,9 @@
                     #{menuItem.price}
                 </h:column>
             </h:dataTable><br />
-            Amount to pay: <h:outputText value="#{StaffManager.order.price}" /> zł
+            Total price without discounts: <h:outputText value="#{StaffManager.order.price + StaffManager.order.discount}" /><br />
+            Total discount: <h:outputText value="#{StaffManager.order.discount}" /><br />
+            Total price with discount: <h:outputText value="#{StaffManager.order.price}" />
         </div>
     </h:body>
 </html>
