@@ -29,11 +29,13 @@ public class Order implements Serializable {
     private String street;
     private String city;
     private String postalCode;
+    private BigDecimal discount;
 
-    public Order(List<MenuItem> orderedMenuItems, Date date, BigDecimal orderPrice, String street, String city, String postalCode) {
+    public Order(List<MenuItem> orderedMenuItems, Date date, BigDecimal orderPrice, BigDecimal discount, String street, String city, String postalCode) {
         this.menuItems = orderedMenuItems;
         this.date = date;
         this.price = orderPrice;
+        this.discount = discount;
         this.street = street;
         this.city = city;
         this.postalCode = postalCode;

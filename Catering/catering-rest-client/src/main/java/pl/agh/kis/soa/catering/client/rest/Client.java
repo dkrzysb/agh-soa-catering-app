@@ -1,5 +1,6 @@
 package pl.agh.kis.soa.catering.client.rest;
 
+import org.jboss.resteasy.client.jaxrs.BasicAuthentication;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
@@ -47,6 +48,7 @@ public class Client {
     private static void getAllMenuCategoriesAsJson() {
         ResteasyClient client = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = client.target("http://localhost:8080/catering-business-logic-rest/api/menu");
+        target.register(new BasicAuthentication("admin", "admin"));
         Response response = target.request().accept(MediaType.APPLICATION_JSON).get();
         System.out.println("\nGet all menu categories json status: " + response.getStatus());
         System.out.println("Response:");
@@ -56,6 +58,7 @@ public class Client {
     private static void getAllMenuCategoriesAsXml() {
         ResteasyClient client = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = client.target("http://localhost:8080/catering-business-logic-rest/api/menu");
+        target.register(new BasicAuthentication("admin", "admin"));
         Response response = target.request().accept(MediaType.TEXT_XML).get();
         System.out.println("\nGet all menu categories as xml status: " + response.getStatus());
         System.out.println("Response:");
@@ -65,6 +68,7 @@ public class Client {
     private static void getMenuCategoryByIdAsJson(Long menuCategoryId) {
         ResteasyClient client = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = client.target("http://localhost:8080/catering-business-logic-rest/api/menu/" + menuCategoryId);
+        target.register(new BasicAuthentication("admin", "admin"));
         Response response = target.request().accept(MediaType.APPLICATION_JSON).get();
         System.out.println("\nGet menu category with id: " + menuCategoryId + " as json status: " + response.getStatus());
         System.out.println("Response:");
@@ -74,6 +78,7 @@ public class Client {
     private static void getMenuCategoryByIdAsXml(Long menuCategoryId) {
         ResteasyClient client = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = client.target("http://localhost:8080/catering-business-logic-rest/api/menu/" + menuCategoryId);
+        target.register(new BasicAuthentication("admin", "admin"));
         Response response = target.request().accept(MediaType.TEXT_XML).get();
         System.out.println("\nGet menu category with id: " + menuCategoryId + " as xml status: " + response.getStatus());
         System.out.println("Response:");

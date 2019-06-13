@@ -85,6 +85,17 @@ public class OrdersManager {
         return orderPrice;
     }
 
+    public BigDecimal getOrderDiscount() {
+        BigDecimal orderDiscount = new BigDecimal(0);
+
+        for(MenuItem menuItem : orderedMenuItems) {
+            if(offerOfTheDayService.isMenuItemInOffersOfTheDay(menuItem.getId()))
+                orderDiscount = orderDiscount.add(menuItemService.getMenuItemById(menuItem.getId()).getPrice().subtract(offerOfTheDayService.getOfferOfTheDay(menuItem.getId()).getPrice()));
+        }
+
+        return orderDiscount;
+    }
+
     public BigDecimal getTotalPriceOfAllClientOrders() {
         Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
         BigDecimal totalPrice = new BigDecimal(0);
@@ -95,6 +106,17 @@ public class OrdersManager {
                 totalPrice = totalPrice.add(menuItem.getPrice());
 
         return totalPrice;
+    }
+
+    public BigDecimal getTotalDiscountOfAllClientOrders() {
+        Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
+        BigDecimal totalDiscount = new BigDecimal(0);
+        List<Order> allClientOrders = orderService.getAllClientOrders(client.getId());
+
+        for(Order order : allClientOrders)
+                totalDiscount = totalDiscount.add(order.getDiscount());
+
+        return totalDiscount;
     }
 
     public List<Order> getAllClientOrders() {
@@ -137,8 +159,9 @@ public class OrdersManager {
         List<Order> clientOrders = orderService.getClientOrdersBetweenDates(client.getId(), fromDate, toDate);
         BigDecimal totalPrice = new BigDecimal(0);
 
-        for(Order order :  clientOrders)
+        for(Order order :  clientOrders) {
             totalPrice = totalPrice.add(order.getPrice());
+        }
 
         return totalPrice;
     }
@@ -208,8 +231,14 @@ public class OrdersManager {
 
     public String confirmOrder() {
         Client client = clientService.getClientByUsername(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
+        BigDecimal discount = new BigDecimal(0);
 
-        Order order = new Order(orderedMenuItems, new Date(), getOrderPrice(), getStreet(), getCity(), getPostalCode());
+        for(MenuItem menuItem : orderedMenuItems) {
+            if(offerOfTheDayService.isMenuItemInOffersOfTheDay(menuItem.getId()))
+                discount = discount.add(menuItemService.getMenuItemById(menuItem.getId()).getPrice().subtract(offerOfTheDayService.getOfferOfTheDay(menuItem.getId()).getPrice()));
+        }
+
+        Order order = new Order(orderedMenuItems, new Date(), getOrderPrice(), discount, getStreet(), getCity(), getPostalCode());
         orderService.addOrder(client.getId(), order);
         orderedMenuItems = new ArrayList<MenuItem>();
 
@@ -246,15 +275,15 @@ public class OrdersManager {
 
     public String getStatus(Order order) {
         if (order.getConfirmed()){
-            return "Zamówienie potwierdzone";
+            return "Order confirmed";
         }
         if (order.getShipPending()){
-            return "Zamówienie gotowe";
+            return "Order waiting for shipping";
         }
         if (order.getShipped()) {
-            return "Zamówienie dostarczone";
+            return "Order shipped";
         }
-        return "Zamowienie złożone";
+        return "Order placed";
     }
 
     public void deleteOrder(Order order) {

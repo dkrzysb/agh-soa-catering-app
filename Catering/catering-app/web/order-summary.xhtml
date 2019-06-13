@@ -36,45 +36,41 @@
             <h:form>
                 <div class="form-group">
                     <label for="street">Street</label>
-                    <h:inputText id="street" class="form-control" value="#{OrdersManager.street}" required="true" label="Street" />
+                    <h:inputText id="street" class="form-control" value="#{OrdersManager.street}" label="Street" />
                 </div>
                 <div class="form-group">
                     <label for="city">City</label>
-                    <h:inputText id="city" class="form-control" value="#{OrdersManager.city}" required="true" label="City" />
+                    <h:inputText id="city" class="form-control" value="#{OrdersManager.city}" label="City" />
                 </div>
                 <div class="form-group">
                     <label for="postalCode">Postal Code</label>
-                    <h:inputText id="postalCode" class="form-control" value="#{OrdersManager.postalCode}" required="true" label="Postal code" />
+                    <h:inputText id="postalCode" class="form-control" value="#{OrdersManager.postalCode}" label="Postal code" />
                 </div>
 
-                <h:messages style = "color:red;margin:8px;" />
-
-
-            <h3>Order summary</h3>
-            <h:dataTable value="#{OrdersManager.orderedMenuItems}" var="menuItem"
-                         styleClass="table thead-dark table-striped"
-                         rowClasses="col">
-                <h:column>
-                    <f:facet name="header">Position number</f:facet>
-                    #{menuItem.id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Name</f:facet>
-                    #{menuItem.name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Serving size</f:facet>
-                    #{menuItem.servingSize}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Price</f:facet>
-                    #{menuItem.price}
-                </h:column>
-            </h:dataTable><br />
-            Amount to pay: <h:outputText value="#{OrdersManager.orderPrice}" /> zł
+                <h3>Order summary</h3>
+                <h:dataTable value="#{OrdersManager.orderedMenuItems}" var="menuItem"
+                             styleClass="table thead-dark table-striped"
+                             rowClasses="col">
+                    <h:column>
+                        <f:facet name="header">Position number</f:facet>
+                        #{menuItem.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                        #{menuItem.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Serving size</f:facet>
+                        #{menuItem.servingSize}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                        #{menuItem.price}
+                    </h:column>
+                </h:dataTable><br />
+                Amount to pay: <h:outputText value="#{OrdersManager.orderPrice}" /><br />
                 <h:commandButton value="Confirm" style="margin-right: 15px;" styleClass="btn btn-primary" action="#{OrdersManager.confirmOrder}" />
                 <h:commandButton value="Cancel" styleClass="btn btn-danger" action="#{OrdersManager.cancelOrder}" />
-
             </h:form>
         </div>
     </h:body>
