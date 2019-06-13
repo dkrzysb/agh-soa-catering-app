@@ -4,12 +4,17 @@ import pl.agh.kis.soa.catering.server.api.IMenuItemRepository;
 import pl.agh.kis.soa.catering.server.model.DbInitializer;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
+import pl.agh.kis.soa.catering.server.model.Order;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -39,7 +44,7 @@ public class MenuItemRepository implements IMenuItemRepository {
         return query.getResultList();
     }
 
-    public void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId) {
+    public void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId, boolean accepted) {
         EntityManager em = factory.createEntityManager();
 
         if(!sameMenuItemExistsInMenuCategory(em, name, servingSize, menuCategoryId)) {
@@ -49,6 +54,7 @@ public class MenuItemRepository implements IMenuItemRepository {
             menuItem.setServingSize(servingSize);
             menuItem.setPrice(price);
             menuItem.setMenuCategory(menuCategory);
+            menuItem.setAccepted(accepted);
 
             em.getTransaction().begin();
             em.persist(menuItem);
@@ -78,6 +84,34 @@ public class MenuItemRepository implements IMenuItemRepository {
         em.getTransaction().begin();
         em.remove(menuItem);
         menuCategory.getItems().remove(menuItem);
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public List<MenuItem> topMeals() {
+        EntityManager em = factory.createEntityManager();
+        Query query = em.createQuery("select order.menuItems from Order order");
+
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<MenuItem> getAllAcceptedMenuCategoryItems(Long menuCategoryId) {
+        EntityManager em = factory.createEntityManager();
+        Query query = em.createQuery("select menuItem from MenuItem menuItem where menuItem.menuCategory.id = :menuCategoryId and menuItem.accepted = true ")
+                .setParameter("menuCategoryId", menuCategoryId);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public void acceptItem(Long menuItemId) {
+        EntityManager em = factory.createEntityManager();
+        MenuItem menuItem = em.find(MenuItem.class, menuItemId);
+
+        em.getTransaction().begin();
+        menuItem.setAccepted(true);
         em.getTransaction().commit();
     }
 

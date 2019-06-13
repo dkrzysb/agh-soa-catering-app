@@ -78,6 +78,7 @@ public class AdminManager {
 
     public void changePassword() {
         clientService.changeUserPassword(userAccount.getUsername(), hashPassword(this.password));
+        this.password = "";
         this.showPopup = false;
     }
 

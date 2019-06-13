@@ -1,15 +1,13 @@
 package pl.agh.kis.soa.catering.server.impl;
 
 import pl.agh.kis.soa.catering.server.api.IOrderRepository;
-import pl.agh.kis.soa.catering.server.model.Client;
-import pl.agh.kis.soa.catering.server.model.DbInitializer;
-import pl.agh.kis.soa.catering.server.model.MenuItem;
-import pl.agh.kis.soa.catering.server.model.Order;
+import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,14 +21,10 @@ import java.util.List;
 public class OrderRepository implements IOrderRepository {
     private EntityManagerFactory factory = DbInitializer.getInstance().getEntityManagerFactory();
 
-    public void addOrder(Long clientId, List<MenuItem> menuItems, Date date, BigDecimal price) {
+    public void addOrder(Long clientId, Order order) {
         EntityManager em = factory.createEntityManager();
-        Order order = new Order();
         Client client = em.find(Client.class, clientId);
         order.setClient(client);
-        order.setMenuItems(menuItems);
-        order.setDate(date);
-        order.setPrice(price);
         order.setConfirmed(false);
         order.setShipPending(false);
         order.setShipped(false);
@@ -108,5 +102,21 @@ public class OrderRepository implements IOrderRepository {
         Order order = em.find(Order.class, orderId);
 
         return order;
+    }
+
+    @Override
+    public void deleteOrder(Long id) {
+        EntityManager em = factory.createEntityManager();
+        Order order = em.find(Order.class, id);
+        em.getTransaction().begin();
+        em.remove(order);
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        EntityManager em = factory.createEntityManager();
+        Query query = em.createQuery("select order from Order order", Order.class);
+        return query.getResultList();
     }
 }

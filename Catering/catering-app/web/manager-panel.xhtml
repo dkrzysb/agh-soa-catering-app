@@ -63,6 +63,10 @@
                             #{menuItem.price}
                         </h:column>
                         <h:column>
+                            <f:facet name="header">Status</f:facet>
+                            #{menuItem.accepted}
+                        </h:column>
+                        <h:column>
                             <h:commandButton value="Update" styleClass="btn btn-primary" action="#{MenuManager.updateMenuItem(menuItem)}" />
                         </h:column>
                         <h:column>
@@ -70,7 +74,13 @@
                                 <f:ajax execute="@form" render="menuItems" />
                             </h:commandButton>
                         </h:column>
+                        <h:column>
+                            <h:commandButton rendered="#{!menuItem.accepted}" value="Accept" styleClass="btn btn-success" action="#{MenuManager.acceptItem(menuItem)}">
+                                <f:ajax execute="@form" render="menuItems" />
+                            </h:commandButton>
+                        </h:column>
                     </h:dataTable>
+                    <h:commandButton styleClass="btn btn-secondary" value="DOWNLOAD MENU" action="#{MenuManager.download()}"/>
                 </h:form>
             </h:panelGroup>
             <hr />

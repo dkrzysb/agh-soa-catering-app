@@ -25,8 +25,11 @@ public class MenuItemService {
 
     public List<MenuItem> getAllMenuCategoryItems(Long menuCategoryId) { return menuItemRepository.getAllMenuCategoryItems(menuCategoryId); }
 
+
+    public List<MenuItem> getAllAcceptedMenuCategoryItems(Long menuCategoryId) { return menuItemRepository.getAllAcceptedMenuCategoryItems(menuCategoryId); }
+
     public void addMenuItem(String name, int servingSize, BigDecimal price, Long menuCategoryId) {
-        menuItemRepository.addMenuItem(name, servingSize, price, menuCategoryId);
+        menuItemRepository.addMenuItem(name, servingSize, price, menuCategoryId, true);
     }
 
     public void updateMenuItem(Long id, String name, int servingSize, BigDecimal price, Long menuCategoryId) {
@@ -35,5 +38,13 @@ public class MenuItemService {
 
     public void deleteMenuItem(Long id) {
         menuItemRepository.deleteMenuItem(id);
+    }
+
+    public List<MenuItem> topMeals() {
+        return menuItemRepository.topMeals();
+    }
+
+    public void acceptItem(Long menuItemId) {
+        menuItemRepository.acceptItem(menuItemId);
     }
 }

@@ -17,8 +17,12 @@ public class OrderService {
     @EJB(lookup = "java:global/catering-business-logic/OrderRepository")
     IOrderRepository orderRepository;
 
-    public void addOrder(Long clientId, List<MenuItem> menuItems, Date date, BigDecimal price) {
-        orderRepository.addOrder(clientId, menuItems, date, price);
+    public List<Order> getAllOrders() {
+        return orderRepository.getAllOrders();
+    }
+
+    public void addOrder(Long clientId, Order order) {
+        orderRepository.addOrder(clientId, order);
     }
 
     public List<Order> getAllClientOrders(Long clientId) {
@@ -44,4 +48,6 @@ public class OrderService {
     public Order getOrderById(Long orderId) {
         return orderRepository.getOrderById(orderId);
     }
+
+    public void deleteOrder(Long id) { orderRepository.deleteOrder(id);}
 }
