@@ -1,13 +1,7 @@
 package pl.agh.kis.soa.catering.client.managers;
 
-import pl.agh.kis.soa.catering.client.services.ClientService;
-import pl.agh.kis.soa.catering.client.services.MenuItemService;
-import pl.agh.kis.soa.catering.client.services.OrderService;
-import pl.agh.kis.soa.catering.client.services.SubscriptionService;
-import pl.agh.kis.soa.catering.server.model.Client;
-import pl.agh.kis.soa.catering.server.model.MenuItem;
-import pl.agh.kis.soa.catering.server.model.Order;
-import pl.agh.kis.soa.catering.server.model.Subscription;
+import pl.agh.kis.soa.catering.client.services.*;
+import pl.agh.kis.soa.catering.server.model.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -20,7 +14,9 @@ import java.util.*;
 @SessionScoped
 public class OrdersManager {
     private Map<Long, Boolean> orderCheckboxes = new HashMap<Long, Boolean>();
+    private Map<Long, Boolean> offersOfTheDayCheckBoxes = new HashMap<Long, Boolean>();
     private List<MenuItem> orderedMenuItems;
+    private List<OfferOfTheDay> orderedOffersOfTheDay;
     private String[] subscriptionDaysOfTheWeek;
     private Date fromDate;
     private Date toDate;
@@ -33,14 +29,20 @@ public class OrdersManager {
     private SubscriptionService subscriptionService;
     @ManagedProperty(value="#{clientService}")
     private ClientService clientService;
+    @ManagedProperty(value="#{offerOfTheDayService}")
+    private OfferOfTheDayService offerOfTheDayService;
 
     public Map<Long, Boolean> getOrderCheckboxes() {
         return orderCheckboxes;
     }
 
+    public Map<Long, Boolean> getOffersOfTheDayCheckBoxes() { return offersOfTheDayCheckBoxes; }
+
     public List<MenuItem> getOrderedMenuItems() {
         return orderedMenuItems;
     }
+
+    public List<OfferOfTheDay> getOrderedOffersOfTheDay() { return orderedOffersOfTheDay; }
 
     public String[] getSubscriptionDaysOfTheWeek() { return subscriptionDaysOfTheWeek; }
 
@@ -145,6 +147,8 @@ public class OrdersManager {
 
     public void setClientService(ClientService clientService) { this.clientService = clientService; }
 
+    public void setOfferOfTheDayService(OfferOfTheDayService offerOfTheDayService) { this.offerOfTheDayService = offerOfTheDayService; }
+
     public void setSubscriptionDaysOfTheWeek(String[] subscriptionDaysOfTheWeek) { this.subscriptionDaysOfTheWeek = subscriptionDaysOfTheWeek; }
 
     public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
@@ -157,8 +161,14 @@ public class OrdersManager {
         for(Long id : orderCheckboxes.keySet()) {
             boolean checked = orderCheckboxes.get(id);
 
-            if(checked)
-                orderedMenuItems.add(menuItemService.getMenuItemById(id));
+            if(checked) {
+                MenuItem menuItem = menuItemService.getMenuItemById(id);
+
+                if(offerOfTheDayService.isMenuItemInOffersOfTheDay(id))
+                    menuItem.setPrice(offerOfTheDayService.getOfferOfTheDay(id).getPrice());
+
+                orderedMenuItems.add(menuItem);
+            }
         }
 
         return "order-summary";

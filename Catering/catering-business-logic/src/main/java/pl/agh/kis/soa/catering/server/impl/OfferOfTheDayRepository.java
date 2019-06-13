@@ -30,6 +30,14 @@ public class OfferOfTheDayRepository implements IOfferOfTheDayRepository {
         em.getTransaction().commit();
     }
 
+    public OfferOfTheDay getOfferOfTheDay(Long menuItemId) {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<OfferOfTheDay> query = em.createQuery("select offerOfTheDay from OfferOfTheDay offerOfTheDay where offerOfTheDay.menuItem.id = :menuItemId", OfferOfTheDay.class)
+                .setParameter("menuItemId", menuItemId);
+
+        return query.getSingleResult();
+    }
+
     public void deleteOfferOfTheDay(Long offerOfTheDayId) {
         EntityManager em = factory.createEntityManager();
         OfferOfTheDay offerOfTheDay = em.find(OfferOfTheDay.class, offerOfTheDayId);
@@ -44,5 +52,13 @@ public class OfferOfTheDayRepository implements IOfferOfTheDayRepository {
         TypedQuery<OfferOfTheDay> query = em.createQuery("select offerOfTheDay from OfferOfTheDay offerOfTheDay", OfferOfTheDay.class);
 
         return query.getResultList();
+    }
+
+    public boolean isMenuItemInOffersOfTheDay(Long menuItemId) {
+        EntityManager em = factory.createEntityManager();
+        TypedQuery<OfferOfTheDay> query = em.createQuery("select offerOfTheDay from OfferOfTheDay offerOfTheDay where offerOfTheDay.menuItem.id = :menuItemId", OfferOfTheDay.class)
+                .setParameter("menuItemId", menuItemId);
+
+        return query.getResultList().size() != 0;
     }
 }

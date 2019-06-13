@@ -2,12 +2,14 @@ package pl.agh.kis.soa.catering.client.managers;
 
 import pl.agh.kis.soa.catering.client.services.MenuCategoryService;
 import pl.agh.kis.soa.catering.client.services.MenuItemService;
+import pl.agh.kis.soa.catering.client.services.OfferOfTheDayService;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "MenuManager")
@@ -22,9 +24,10 @@ public class MenuManager {
     private MenuItemService menuItemService;
     @ManagedProperty(value="#{menuCategoryService}")
     private MenuCategoryService menuCategoryService;
+    @ManagedProperty(value="#{offerOfTheDayService}")
+    private OfferOfTheDayService offerOfTheDayService;
 
     public Long getMenuCategoryId() { return menuCategoryId; }
-    public void setMenuCategoryId(Long menuCategoryId) { this.menuCategoryId = menuCategoryId; }
 
     public MenuCategory getMenuCategory() { return menuCategory; }
 
@@ -34,6 +37,10 @@ public class MenuManager {
 
     public void setMenuCategoryService(MenuCategoryService menuCategoryService) { this.menuCategoryService = menuCategoryService; }
 
+    public void setOfferOfTheDayService(OfferOfTheDayService offerOfTheDayService) { this.offerOfTheDayService = offerOfTheDayService; }
+
+    public void setMenuCategoryId(Long menuCategoryId) { this.menuCategoryId = menuCategoryId; }
+
     public List<MenuCategory> getAllMenuCategories() {
         return menuCategoryService.getAllMenuCategories();
     }
@@ -41,7 +48,14 @@ public class MenuManager {
     public List<MenuItem> getAllMenuCategoryItems() { return menuItemService.getAllMenuCategoryItems(menuCategoryId); }
 
     public List<MenuItem> getAllMenuCategoryItemsForClient(MenuCategory menuCategory) {
-        return menuItemService.getAllMenuCategoryItems(menuCategory.getId());
+        List<MenuItem> allMenuCategoryItems = menuItemService.getAllMenuCategoryItems(menuCategory.getId());
+
+        for (MenuItem allMenuCategoryItem : allMenuCategoryItems) {
+            if (offerOfTheDayService.isMenuItemInOffersOfTheDay(allMenuCategoryItem.getId()))
+                allMenuCategoryItem.setPrice(offerOfTheDayService.getOfferOfTheDay(allMenuCategoryItem.getId()).getPrice());
+        }
+
+        return allMenuCategoryItems;
     }
 
     public String addMenuCategory() {

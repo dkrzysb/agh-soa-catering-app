@@ -19,6 +19,10 @@ public class OfferOfTheDayService {
         offerOfTheDayRepository.addOfferOfTheDay(menuItemId, price);
     }
 
+    public OfferOfTheDay getOfferOfTheDay(Long menuItemId) {
+        return offerOfTheDayRepository.getOfferOfTheDay(menuItemId);
+    }
+
     public void deleteOfferOfTheDay(Long offerOfTheDayId) {
         offerOfTheDayRepository.deleteOfferOfTheDay(offerOfTheDayId);
     }
@@ -26,4 +30,6 @@ public class OfferOfTheDayService {
     public List<OfferOfTheDay> getAllOffersOfTheDay() {
         return offerOfTheDayRepository.getAllOffersOfTheDay();
     }
+
+    public boolean isMenuItemInOffersOfTheDay(Long menuItemId) { return offerOfTheDayRepository.isMenuItemInOffersOfTheDay(menuItemId); }
 }
