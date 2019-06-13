@@ -1,11 +1,13 @@
 package pl.agh.kis.soa.catering.client.managers;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
 import pl.agh.kis.soa.catering.client.services.MenuCategoryService;
 import pl.agh.kis.soa.catering.client.services.MenuItemService;
 import pl.agh.kis.soa.catering.client.services.OfferOfTheDayService;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 import pl.agh.kis.soa.catering.server.model.MenuItem;
 
+import javax.annotation.security.RolesAllowed;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -19,6 +21,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+@SecurityDomain("postgresqldomain")
 @ManagedBean(name = "MenuManager")
 @SessionScoped
 public class MenuManager {
@@ -67,13 +70,14 @@ public class MenuManager {
         return allMenuCategoryItems;
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public String addMenuCategory() {
         this.menuCategory = new MenuCategory();
         operationType = OperationType.Add;
 
         return "add-update-menu-category";
     }
-
+    @RolesAllowed({"Admin","Manager"})
     public String updateMenuCategory() {
         this.menuCategory = menuCategoryService.getMenuCategoryById(menuCategoryId);
         operationType = OperationType.Update;
@@ -81,12 +85,14 @@ public class MenuManager {
         return "add-update-menu-category";
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public String deleteMenuCategory() {
         menuCategoryService.deleteMenuCategory(menuCategoryId);
 
         return "manager-panel";
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public String addMenuItem() {
         this.menuItem = new MenuItem();
         operationType = OperationType.Add;
@@ -94,6 +100,7 @@ public class MenuManager {
         return "add-update-menu-item";
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public String updateMenuItem(MenuItem menuItem) {
         this.menuItem = menuItem;
         operationType = OperationType.Update;
@@ -101,12 +108,14 @@ public class MenuManager {
         return "add-update-menu-item";
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public String deleteMenuItem(MenuItem menuItem) {
         menuItemService.deleteMenuItem(menuItem.getId());
 
         return "manager-panel";
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public String addOrUpdateMenuCategory() {
         switch(operationType) {
             case Add:
@@ -120,6 +129,7 @@ public class MenuManager {
         return "manager-panel";
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public String addOrUpdateMenuItem() {
         switch(operationType) {
             case Add:
@@ -134,6 +144,7 @@ public class MenuManager {
     }
 
 
+    @RolesAllowed({"Admin","Manager"})
     public void download() throws IOException {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
@@ -163,6 +174,7 @@ public class MenuManager {
         fc.responseComplete(); // Important! Otherwise JSF will attempt to render the response which obviously will fail since it's already written with a file and closed.
     }
 
+    @RolesAllowed({"Admin","Manager"})
     public void acceptItem(MenuItem menuItem) {
         menuItemService.acceptItem(menuItem.getId());
     }

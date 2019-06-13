@@ -1,9 +1,11 @@
 package pl.agh.kis.soa.catering.client.managers;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
 import pl.agh.kis.soa.catering.client.services.OrderService;
 import pl.agh.kis.soa.catering.server.model.Order;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -11,6 +13,7 @@ import javax.inject.Inject;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
 
+@SecurityDomain("postgresqldomain")
 @ManagedBean(name = "StaffManager")
 @ApplicationScoped
 public class StaffManager {
@@ -26,13 +29,14 @@ public class StaffManager {
     public void setOrderService(OrderService orderService) { this.orderService = orderService; }
 
     public Order getOrder() { return order; }
-    
+
+    @RolesAllowed({"Admin","Manager", "Staff"})
     public String confirmOrder(Long orderId) {
         orderService.confirmOrder(orderId);
 
         return "staff-panel";
     }
-
+    @RolesAllowed({"Admin","Manager","Staff"})
     public String generateReceipt(Long orderId) {
         order = orderService.getOrderById(orderId);
 

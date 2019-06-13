@@ -7,6 +7,7 @@ import pl.agh.kis.soa.catering.server.model.Client;
 import pl.agh.kis.soa.catering.server.model.MenuCategory;
 import pl.agh.kis.soa.catering.server.model.UserAccount;
 
+import javax.annotation.security.RolesAllowed;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -15,7 +16,10 @@ import javax.xml.registry.infomodel.User;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+@RolesAllowed("Admin")
+@SecurityDomain("postgresqldomain")
 @ManagedBean(name = "AdminManager")
 @SessionScoped
 public class AdminManager {
