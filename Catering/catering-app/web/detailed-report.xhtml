@@ -67,7 +67,9 @@
             <br/>
             <br/>
             <br/>
-            Total price: <h:outputText value="#{OrdersManager.totalPriceOfAllClientOrders}" /> zł
+            Total price without discounts: <h:outputText value="#{OrdersManager.totalPriceOfAllClientOrders}" /><br />
+            Total discount: <h:outputText value="#{OrdersManager.totalDiscountOfAllClientOrders}" /><br />
+            Total price with discount: <h:outputText value="#{OrdersManager.totalPriceOfAllClientOrders - OrdersManager.totalDiscountOfAllClientOrders}" />
         </div>
     </h:body>
 </html>

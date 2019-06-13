@@ -71,10 +71,9 @@
                     #{menuItem.price}
                 </h:column>
             </h:dataTable><br />
-            Amount to pay: <h:outputText value="#{OrdersManager.orderPrice}" /> zł
+                Amount to pay: <h:outputText value="#{OrdersManager.orderPrice}" /><br />
                 <h:commandButton value="Confirm" style="margin-right: 15px;" styleClass="btn btn-primary" action="#{OrdersManager.confirmOrder}" />
                 <h:commandButton value="Cancel" styleClass="btn btn-danger" action="#{OrdersManager.cancelOrder}" />
-
             </h:form>
         </div>
     </h:body>

@@ -70,6 +70,9 @@
                         #{menuItem.price}
                     </h:column>
                 </h:dataTable><br />
+                Total price: #{order.price + order.discount}<br />
+                Total discount: #{order.discount}<br />
+                Total price with discount: #{order.price - order.discount}<br />
             </ui:repeat>
         </h:panelGroup>
     </div>
