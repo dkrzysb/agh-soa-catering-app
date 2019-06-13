@@ -16,7 +16,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
 
 @Remote(IMenuItemRepository.class)
 @Stateless
@@ -92,8 +92,31 @@ public class MenuItemRepository implements IMenuItemRepository {
         EntityManager em = factory.createEntityManager();
         Query query = em.createQuery("select order.menuItems from Order order");
 
+        List<MenuItem> itemsList = query.getResultList();
 
-        return query.getResultList();
+        Map<MenuItem, Integer> top10Map = new HashMap<>();
+        for (MenuItem menuItem: itemsList) {
+            Integer cnt = top10Map.get(menuItem);
+            int val = (cnt == null) ? 1 : cnt.intValue()+1;
+            top10Map.put(menuItem, val);
+        }
+
+        List<Map.Entry<MenuItem, Integer> > list = new LinkedList<>(top10Map.entrySet());
+
+        // Sort the map
+        Collections.sort(list, Comparator.comparing(Map.Entry::getValue));
+
+        LinkedList<MenuItem> top10List = new LinkedList<>();
+        int i = 0;
+        for (Map.Entry<MenuItem, Integer> menuItem: list) {
+            if(i >= 10){
+                break;
+            }
+            i = i + 1;
+            top10List.push(menuItem.getKey());
+        }
+
+        return top10List;
     }
 
     @Override
