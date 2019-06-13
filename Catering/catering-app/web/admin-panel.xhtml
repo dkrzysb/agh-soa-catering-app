@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-
-
-
 </h:head>
 <h:body>
     <h:form>
@@ -32,7 +29,6 @@
     </h:form>
 
     <div class="container">
-
         <h3>Users</h3>
         <h:form id="formula">
             <h:dataTable id="usersDT" value="#{AdminManager.allUserAccounts}" var="user"
@@ -65,8 +61,6 @@
                                     <h:inputSecret id="newPassword" class="form-control" value="#{AdminManager.password}" required="true" label="Password" />
                                 </div>
                                 <h:messages style = "color:red;margin:8px;" />
-
-
                             </div>
                             <div class="modal-footer">
                                 <h:commandButton styleClass="btn btn-secondary" value="Close" action="#{AdminManager.hideUpdatePassword()}">
@@ -75,16 +69,16 @@
                                 <h:commandButton styleClass="btn btn-primary" value="Change" action="#{AdminManager.changePassword()}">
                                     <f:ajax render="formula" execute="formula"/>
                                 </h:commandButton>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </h:panelGroup>
-            <h3>Orders</h3>
-            <hr/>
-            <ui:repeat id="orders" var="order" value="#{OrdersManager.allOrders}">
+        </h:form>
+        <h3>Orders</h3>
+        <hr/>
+        <h:panelGroup id="orders">
+            <ui:repeat var="order" value="#{OrdersManager.allOrders}">
                 <h5>Order date: #{order.date}
                     #{OrdersManager.getStatus(order)}
                     <h:commandButton value="Cancel" styleClass="btn btn-danger btn-sm" action="#{OrdersManager.deleteOrder(order)}" >
@@ -113,11 +107,7 @@
                     </h:column>
                 </h:dataTable><br />
             </ui:repeat>
-        </h:form>
+        </h:panelGroup>
     </div>
-
-
-
-
 </h:body>
 </html>

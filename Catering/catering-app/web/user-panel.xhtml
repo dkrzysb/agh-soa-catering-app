@@ -26,10 +26,8 @@
         </div>
     </h:form>
 
-
     <div class="container" style="width: 350px">
         <h:form>
-
             <h4 class="text-center">Change password</h4>
 
             <div class="form-group">
@@ -41,14 +39,14 @@
                 <label for="newPassword">New Password</label>
                 <h:inputText id="newPassword" class="form-control" value="#{UserManager.password}" required="true" label="Name" />
             </div>
+
             <div class="form-group">
                 <label for="newPassword1">Repeat New Password</label>
                 <h:inputText id="newPassword1" class="form-control" value="#{UserManager.password}" required="true" label="Name" />
             </div>
+
             <h:commandButton value="Submit" action="#{UserManager.updateUserPassword}" styleClass="btn btn-primary" style="width: 100%"/>
             <h:messages style = "color:red;margin:8px;" />
-
-
         </h:form>
     </div>
 </h:body>

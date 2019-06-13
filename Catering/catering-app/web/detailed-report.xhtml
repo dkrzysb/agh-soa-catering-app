@@ -65,13 +65,13 @@
                         </h:column>
                     </h:dataTable><br />
                 </ui:repeat>
-            </h:panelGroup>
             <br/>
             <br/>
             <br/>
             Total price without discounts: <h:outputText value="#{OrdersManager.totalPriceOfAllClientOrders}" /><br />
             Total discount: <h:outputText value="#{OrdersManager.totalDiscountOfAllClientOrders}" /><br />
             Total price with discount: <h:outputText value="#{OrdersManager.totalPriceOfAllClientOrders - OrdersManager.totalDiscountOfAllClientOrders}" />
+            </h:panelGroup>
         </div>
     </h:body>
 </html>
