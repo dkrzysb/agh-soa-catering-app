@@ -11,6 +11,7 @@
 
     <groupId>pl.agh.kis.soa.catering.server.rest</groupId>
     <artifactId>catering-business-logic-rest</artifactId>
+
     <build>
         <plugins>
             <plugin>
@@ -23,6 +24,7 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -52,6 +54,4 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
-
 </project>
